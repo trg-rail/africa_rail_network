@@ -1,0 +1,7 @@
+Derived from GeoFabrik extract of OpenStreetMap:
+- africa-211101.osm.pbf 
+
+Using https://github.com/nismod/east-africa-transport/blob/b44b821bc9dff481912ac1da2831f3f3d3313c18/scripts/preprocess/rail/rail_africa_preprocess.sh
+
+Produced on 11 Feb 2022, Tom Russell
+
