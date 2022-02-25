@@ -120,7 +120,7 @@ ALTER TABLE africa_osm_edges
 		ADD COLUMN length float4,
     ADD COLUMN source integer, 
 		ADD COLUMN target integer,
-		ADD COLUMN oid integer,
+		ADD COLUMN oid int8,
 		ADD COLUMN line text,
 		ADD COLUMN gauge text,
 		ADD COLUMN status text, -- open, abandoned, disused, rehabilitation, construction, proposed etc
@@ -138,16 +138,17 @@ UPDATE africa_osm_edges set length = round(st_lengthspheroid(geom, 'SPHEROID["WG
 UPDATE africa_osm_edges set mode = 'mixed';
 		
 -- copy integer ids component
-UPDATE africa_osm_edges set source = reverse(split_part(reverse(from_id), '_', 1))::int4;
-UPDATE africa_osm_edges set target = reverse(split_part(reverse(to_id), '_', 1))::int4;
-UPDATE africa_osm_edges set oid = reverse(split_part(reverse(id), '_', 1))::int4;
+-- africa ids start 555000000
+UPDATE africa_osm_edges set source = 555000000 + reverse(split_part(reverse(from_id), '_', 1))::int4;
+UPDATE africa_osm_edges set target = 555000000 + reverse(split_part(reverse(to_id), '_', 1))::int4;
+UPDATE africa_osm_edges set oid = 555000000 + reverse(split_part(reverse(id), '_', 1))::int4;
 
 -- make primary key
 ALTER TABLE africa_osm_edges ADD PRIMARY KEY (oid);
 
 -- add oid column to nodes
-ALTER TABLE africa_osm_nodes ADD COLUMN oid int4;
-UPDATE africa_osm_nodes set oid = reverse(split_part(reverse(id), '_', 1))::int4;
+ALTER TABLE africa_osm_nodes ADD COLUMN oid int8;
+UPDATE africa_osm_nodes set oid = 555000000 + reverse(split_part(reverse(id), '_', 1))::int4;
 
 -- make primary key
 ALTER TABLE africa_osm_nodes ADD PRIMARY KEY (oid);
@@ -155,12 +156,6 @@ ALTER TABLE africa_osm_nodes ADD PRIMARY KEY (oid);
 alter table africa_osm_nodes
 add COLUMN gauge text,
 add COLUMN facility text; -- dry_port, gauge_interchange etc
-
-
--- Update line - copy over text from name field
-
-UPDATE africa_osm_edges
- set line = name;
 
 -- Update status - copy over from railway key as appropriate; otherwise assume open
 
