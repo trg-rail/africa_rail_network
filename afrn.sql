@@ -17,10 +17,10 @@ create index africa_osm_nodes_geom_idx
 on africa_osm_nodes
 using gist (geom);
 
-select count(*) from africa_osm_nodes;
+select count(*) from africa_osm_nodes; --154953
 
 -- find null country
-select * from africa_osm_nodes where country is null;
+select * from africa_osm_nodes where country is null; --4/0
 
 -- update null country column
 update africa_osm_nodes
@@ -33,7 +33,7 @@ when id = 'rail_africa_74726' then 'Eritrea'
 end
 where id in ('rail_africa_128466', 'rail_africa_143576', 'rail_africa_148693', 'rail_africa_74726');
 
--- find duplicates from the intersect query
+-- find duplicates from the intersect query with africa_osm_countries
 
 select id, count(*)
 from africa_osm_nodes
@@ -47,10 +47,11 @@ delete from africa_osm_nodes where id = 'rail_africa_81222' and country != 'Bots
 -- assign country to edges
 
 -- set srid
-SELECT UpdateGeometrySRID('africa_osm_edges','geom',4326);
+-- SELECT UpdateGeometrySRID('africa_osm_edges','geom',4326);
 
 -- need a unique id to use with the intersect query so we can remove duplicates later
 CREATE SEQUENCE africa_osm_edges_vid_seq CYCLE;
+ALTER SEQUENCE africa_osm_edges_vid_seq RESTART WITH 1;
 
 create table africa_osm_edges_new as
 select nextval('africa_osm_edges_vid_seq'::regclass) AS vid, a.*, b.name as country from
@@ -61,10 +62,13 @@ on st_intersects(a.geom, b.geom);
 select count(*) from africa_osm_edges; -- 135473
 select count(*) from africa_osm_edges_new; -- 135512
 
--- drop old edges table
+-- delete old edges table 
 drop table africa_osm_edges cascade;
 -- rename new table
 alter table africa_osm_edges_new rename to africa_osm_edges;
+-- keep copy of prepared edges table in case need to repeat steps that follow
+create table africa_osm_edges_backup as select * from africa_osm_edges;
+-- create table africa_osm_edges as select * from africa_osm_edges_backup
 
 -- create geom index
 create index africa_osm_edges_geom_idx
@@ -72,13 +76,13 @@ on africa_osm_edges
 using gist (geom);
 
 -- find null country column if any
-select * from africa_osm_edges where country is null; --zero
+--select * from africa_osm_edges where country is null; --zero
 
 -- number of duplicates as a result of the intersect - this is edges that cross country boundaries
-select id, count(*)
-from africa_osm_edges
-group by id
-HAVING count(*) > 1; --39
+--select id, count(*)
+--from africa_osm_edges
+--group by id
+--HAVING count(*) > 1; --39
 
 -- need to remove any duplicates keeping just the row with the country with greatest length of the edge
 -- first CTE calculate length of the intersection within the country
@@ -106,7 +110,7 @@ where rank != 1
 )
 delete from africa_osm_edges where vid in (select vid from tmp2);
 
-select count(*) from africa_osm_edges; -- 135473
+--select count(*) from africa_osm_edges; -- 135473
 
 -- pgRouting requires the source and target nodes to be integer ids.
 -- Need to amend node and edge ids to integer
@@ -134,7 +138,6 @@ UPDATE africa_osm_edges set length = round(st_lengthspheroid(geom, 'SPHEROID["WG
 UPDATE africa_osm_edges set mode = 'mixed';
 		
 -- copy integer ids component
--- all africa ids start 9990000 (to separate from east africa nodes already defined)
 UPDATE africa_osm_edges set source = reverse(split_part(reverse(from_id), '_', 1))::int4;
 UPDATE africa_osm_edges set target = reverse(split_part(reverse(to_id), '_', 1))::int4;
 UPDATE africa_osm_edges set oid = reverse(split_part(reverse(id), '_', 1))::int4;
@@ -152,6 +155,12 @@ ALTER TABLE africa_osm_nodes ADD PRIMARY KEY (oid);
 alter table africa_osm_nodes
 add COLUMN gauge text,
 add COLUMN facility text; -- dry_port, gauge_interchange etc
+
+
+-- Update line - copy over text from name field
+
+UPDATE africa_osm_edges
+ set line = name;
 
 -- Update status - copy over from railway key as appropriate; otherwise assume open
 
