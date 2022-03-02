@@ -33,7 +33,7 @@ where oid = 555062472;
 -- Taourirt - current railway value platform
 update africa_osm_nodes
 set railway = 'station'
-where oid = 555035422
+where oid = 555035422;
 
 update africa_osm_nodes
 set name = 'Bouarfa',
@@ -304,7 +304,7 @@ END $$;
 -- allow routing out of Tanger Ville for LGV
 -- split 88425 @ 77371
 -- split 884251 (from above) @ 74354
---allow accessto/from Tanger-Med line
+-- allow accessto/from Tanger-Med line
 -- split 555032587 @ 555101620
 -- split 555091026 @ 555123363
 -- allow access from Tanger-Med line to the old (non HST) Tanger -> Kenitra line
@@ -604,10 +604,10 @@ comment = ''
 where oid in (select edge from tmp);
 
 -- get vertives for edge to insert Boufra station node
---create table temp3 as (
---select (ST_DumpPoints(geom)).path as path, oid, (ST_DumpPoints(geom)).geom FROM africa_osm_edges
---where oid = 555072327
---)
+-- create table temp3 as (
+-- select (ST_DumpPoints(geom)).path as path, oid, (ST_DumpPoints(geom)).geom FROM africa_osm_edges
+-- where oid = 555072327;
+-- )
 
 -- Oujda to Bouarfa (freight only plus occassional tourist Oriental Destert Express)
 with tmp as(
@@ -1053,7 +1053,6 @@ status = 'open',
 comment = 'Appears to serve Jerada coal-powered power station. Coal imported via Nador port',
 mode = 'freight'
 where oid in (select edge from tmp);
-
 
 
 update africa_osm_nodes
