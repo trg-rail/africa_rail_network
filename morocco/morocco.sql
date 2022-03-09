@@ -1059,3 +1059,7 @@ update africa_osm_nodes
 set gauge = '1435'
 where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1435'))
 and railway in ('station', 'halt', 'stop');
+
+-- extract tables for morocco (backup)
+create table morocco_osm_edges as select * from africa_osm_edges where country like '%Morocco%';
+create table morocco_osm_nodes as select * from africa_osm_nodes where country like '%Morocco%';
