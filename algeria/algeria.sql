@@ -737,7 +737,6 @@ BEGIN
 END LOOP;
 END $$;
 
-
 -- update line information
 
 -- Alger/Algiers to El Harrach
@@ -990,7 +989,6 @@ comment = '',
 mode = 'freight',
 type = 'conventional'
 where oid in (select edge from tmp);
-
 
 -- add link between 555017876 and 556026121
 -- simplify routing from Marsat el Hadjadj into Mohammedia station
@@ -1748,7 +1746,6 @@ comment = 'Freight only, border not open to passenger traffic',
 mode = 'freight',
 type = 'conventional'
 where oid in (select edge from tmp);
-
 
 --  Sidi Lahssen to Sidi Bel Abbès Industrial Zone
 -- link 555083557 to 555016699
