@@ -1,4 +1,4 @@
-# africa_rail_network
+# An Open Source Rail Dataset For Africa
 
 Progress:
 
