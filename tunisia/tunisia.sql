@@ -68,17 +68,10 @@ railway = 'station'
 where oid = 555018121;
 
 update africa_osm_nodes
-set name = 'Port La Goulette Sud',
+set name = 'La Goulette',
 railway = 'station',
-gauge = '1435',
-facility = 'port'
-where oid = 555042215;
-
-update africa_osm_nodes
-set name = 'Port La Goulette Sud',
-railway = 'station',
-gauge = '1000',
-facility = 'port'
+gauge = 'dual',
+facility = null
 where oid = 556042215;
 
 update africa_osm_nodes
@@ -126,6 +119,45 @@ set name = 'Tozeur توزر',
 railway = 'station'
 where oid = 555071107;
 
+update africa_osm_nodes
+set name = 'Tabeddit محطة تابديت',
+railway = 'station'
+where oid = 556062228;
+
+update africa_osm_nodes
+set name = 'Redeyef الرديف',
+railway = 'station'
+where oid = 555062230;
+
+update africa_osm_nodes
+set name = 'Metlaoui المتلوي',
+railway = 'station'
+where oid = 555089794;
+
+update africa_osm_nodes
+set name = 'Mokine Marchandises',
+railway = 'station'
+where oid = 555064505;
+
+update africa_osm_nodes
+set name = 'Sousse Sud سوسة الجنوبية',
+railway = 'station'
+where oid = 556054466;
+
+update africa_osm_nodes
+set name = 'Monastir المنستير',
+railway = 'station'
+where oid = 555022961;
+
+update africa_osm_nodes
+set name = 'Mahdia',
+railway = 'station'
+where oid = 555010695;
+
+update africa_osm_nodes
+set name = 'Ben Bachir بن بشير',
+railway = 'station'
+where oid = 555055347;
 
 
 
@@ -141,9 +173,40 @@ where oid in ()
 -- ports
 update africa_osm_nodes
 set railway = 'stop',
-name = '',
+name = 'Bizerte Port',
 facility = 'port'
-where oid = ;
+where oid = 555012953;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Sousse Port',
+facility = 'port'
+where oid = 555126662;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Sfax-Sidi Youssef Port',
+facility = 'port'
+where oid = 555017910;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Port of Gabès',
+facility = 'port'
+where oid = 555085435;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Port of Radès (container)',
+facility = 'port'
+where oid = 555064404;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Port of Radès (specialized berths)',
+facility = 'port'
+where oid = 555017565;
+
 
 -- mines / industrial etc
 
@@ -165,13 +228,87 @@ name = 'M''dhilla Mine (Phosphate)',
 facility = 'mine'
 where oid = 555017817;
 
+update africa_osm_nodes
+set railway = 'stop',
+name = 'M''dhilla Phosphate Works',
+facility = 'manufacturing'
+where oid = 555017810;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Redeyef Mine (Phosphate)',
+facility = 'mine'
+where oid = 555085780;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Metlaoui Phosphate Washing Plant',
+facility = 'manufacturing'
+where oid = 555085679;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Tunisian Sugar and Yeast Companies',
+facility = 'manufacturing'
+where oid = 555078177;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Bizerte Cement',
+facility = 'manufacturing'
+where oid = 555012925;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Enfidha Cement',
+facility = 'manufacturing'
+where oid = 555086349;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Thyna Salt Works',
+facility = 'mining'
+where oid = 555017902;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Tunisian Indian Fertilizers (TIFERT)',
+facility = 'manufacturing'
+where oid = 555017888;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Tunisian Chemical Group',
+facility = 'manufacturing'
+where oid = 555015049;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Gabès Cement Company',
+facility = 'manufacturing'
+where oid = 555017763;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Umm al-Arais Phosphate Mine',
+facility = 'mine'
+where oid = 555082944;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Jérissa Iron Ore Mine',
+facility = 'mine'
+where oid = 555118034;
+
+
+
 -- industrial zones
 
 update africa_osm_nodes
 set railway = 'stop',
-name = '',
+name = 'Sfax Zone Industrielle Poudrière 1',
 facility = 'Industrial zone'
-where oid = ;
+where oid = 555017951;
 
 -- insert node to enable link to be inserted
 -- will then be inserted onto correct edge below
@@ -203,13 +340,28 @@ oid, railway, name, country, gauge, facility, geom)
  )
 ;
 
+-- node for Erriadh station
+insert into africa_osm_nodes (
+oid, railway, name, country, gauge, facility, geom)
+ values (
+ 557000003,
+ 'station',
+ 'Erriadh',
+ 'Tunisia',
+ '',
+ '',
+ ST_SetSRID(ST_Point(10.42152,36.69828), 4326)
+ )
+;
+
+
 
 SELECT ST_SetSRID( ST_Point(8.00607,35.66806), 4326)
 
 -- create new station (or other) nodes
 -- this is required as there can be several edges running through stations but the station node
 -- is located on an edge that isn't used for the route.
--- copy Port La Goulette - Sud 555042215 to 555025933
+-- copy La Goulette 555042215 to 555025933
 -- copy Le Kef 555062252 to 555043283
 -- copy Bir Bourekba 555054493 to 555042264
 -- copy Jilma 555060776 to 555084260
@@ -218,14 +370,19 @@ SELECT ST_SetSRID( ST_Point(8.00607,35.66806), 4326)
 -- copy 555064498 to 555041978
 -- copy Mdhila 555060747 to 555041413
 -- node for Aguila 557000002 to 555041428
+-- copy for Tabeddit 555062228 to 5550415802
+-- copy for Erriadh 557000003 to 555063054
+-- copy for Sousse Sud 555054466 to 555054792
+-- copy Ben Bachir 555055347 to 555029019
+-- routing from Ghannouch to cement work copy 555085460 to 555034358
 
 DO $$ DECLARE
 -- create new station nodes
 -- note: must not be a node coincident with the closest point (reassign that node as a station instead)
--- nodes INT8 ARRAY DEFAULT ARRAY [557000001, 555042215, 555062252, 555054493, 555060776, 555054474, 555064498, 555060747, 557000002];
--- edges INT8 ARRAY DEFAULT ARRAY [555084267, 555025933, 555043283, 555042264, 555084260, 555045726, 555041978, 555041413, 555041428];
-nodes INT8 ARRAY DEFAULT ARRAY [557000002];
-edges INT8 ARRAY DEFAULT ARRAY [555041428];
+-- nodes INT8 ARRAY DEFAULT ARRAY [557000001, 555042215, 555062252, 555054493, 555060776, 555054474, 555064498, 555060747, 557000002, 557000003, 555054466, 555055347, 555085460];
+-- edges INT8 ARRAY DEFAULT ARRAY [555084267, 555025933, 555043283, 555042264, 555084260, 555045726, 555041978, 555041413, 555041428, 555063054, 555054792, 555029019, 555034358];
+nodes INT8 ARRAY DEFAULT ARRAY [555085460];
+edges INT8 ARRAY DEFAULT ARRAY [555034358];
 node INT8;
 edge INT8;
 idx INT;
@@ -340,12 +497,67 @@ END $$;
 -- split 5550414281 at 555085551
 -- routing to M'dhilla Mine
 -- split 555041412 at 555085509
+-- routing into/out of Tabeditt
+-- split 555049721 at 555085743
+-- split 5550415801 at 555085744
+-- split 555041591 at 555091579
+-- split 555047399 at 555085805
+-- split 5550473991 at 555085792
+-- routing into Metlaoui from phosphate washing plant
+-- split 555041459 at 555085697
+-- routing from Borj Cedria to Erriadh
+-- split 555026353 at 555086382
+-- routing in/out Monastir
+-- split 555055468 at 555095691
+-- routing from Gafsa to Aouinet line
+-- split 555084239 at 555085641
+-- split 555041422 at 555085505
+-- split 555041312 at 555085496
+-- split 555037254 at 555085497
+-- routing into Aouinet from Gafsa
+-- split 555034474 at 555118020
+-- routing to Bizerte port
+-- split 555028737 at 555077998
+-- routing to Sousse Port
+-- split 555096415 at 555126661
+-- routing into Sfx-Sidi port
+-- split 555041828 at 555086060
+-- split 555034365 at 555085974
+-- routing to Port of Gabes
+-- split 555041266 at 555085427
+-- split 555041263 at 555085487
+-- routing to Port of Rabes container terminal
+-- split 555042391 at 555064403
+-- routing to Beja food manufacturers
+-- split 555029008 at 555078178
+-- split 555028951 at 555078198
+-- routing to Bizerte Cement
+-- split 555028768 at 555078008
+-- routing to Enfidha Cement
+-- split 555042142 at 555086266
+-- routing to Sfax Zone Industrielle Poudrière 1
+-- split 555041833 at 555085986
+-- split 555041821 at 555085990
+-- routing to Thyna salt works
+-- split 555084238 at 555085940
+-- split 555054930 at  555085939
+-- split 5550842382 at 555085960
+-- TIFERT (Tunisian Indian Fertilizers) access
+-- split 555041757 at 555085891
+-- routing from Ghannouch to Gabes cement
+-- split 555041293 at 555085425
+-- routing to M'dhilla Phosphate Works
+-- split 5550414131 at 555085510
+-- routing to  Umm al-Arais Phosphate mine
+-- split 555037273 at 555082943
+-- routing to Jérissa Iron Ore Mine
+-- split 555044843 at 555087300
 
 DO $$ DECLARE
--- edges INT8 ARRAY DEFAULT ARRAY [555028119, 555028096, 555028115, 555029315, 555028057, 555042812, 555026320, 5550263201, 555029421, 555026313, 555026240, 555026286, 555027102, 555023279, 555066827, 555026878, 5550268781, 555041533, 555034496, 555037260, 5550414281, 555041412];
--- nodes INT8 ARRAY DEFAULT ARRAY [555077658, 555086819,  555086818, 555083372, 555086848, 555086854, 555076508, 555117781, 555085113, 555076466, 555076507, 555076439, 555074617, 555074616, 555076525, 555002536, 555064390, 555087464, 555081180, 555085552, 555085551, 555085509];
-edges INT8 ARRAY DEFAULT ARRAY [555041412];
-nodes INT8 ARRAY DEFAULT ARRAY [555085509];
+-- edges INT8 ARRAY DEFAULT ARRAY [555028119, 555028096, 555028115, 555029315, 555028057, 555042812, 555026320, 5550263201, 555029421, 555026313, 555026240, 555026286, 555027102, 555023279, 555066827, 555026878, 5550268781, 555041533, 555034496, 555037260, 5550414281, 555041412, 555049721, 5550415801, 555041591,  555047399, 5550473991, 555041459, 555026353, 555055468, 555084239, 555041422, 555041312, 555037254, 555034474, 555028737, 555096415, 555041828, 555034365, 555041266, 555041263, 555042391, 555029008, 555028951, 555028768, 555042142, 555041833, 555041821, 555084238, 555054930, 5550842382, 555041757, 555041293, 5550414131, 555037273, 555044843];
+-- nodes INT8 ARRAY DEFAULT ARRAY [555077658, 555086819,  555086818, 555083372, 555086848, 555086854, 555076508, 555117781, 555085113, 555076466, 555076507, 555076439, 555074617, 555074616, 555076525, 555002536, 555064390, 555087464, 555081180, 555085552, 555085551, 555085509, 555085743, 555085744, 555091579, 555085805, 555085792, 555085697, 555086382, 555095691, 555085641, 555085505, 555085496, 555085497, 555118020, 555077998, 555126661, 555086060, 555085974, 555085427, 555085487, 555064403, 555078178, 555078198, 555078008, 555086266, 555085986, 555085990, 555085940, 555085939, 555085960, 555085891, 555085425, 555085510, 555082943, 555087300];
+edges INT8 ARRAY DEFAULT ARRAY [555044843];
+nodes INT8 ARRAY DEFAULT ARRAY [555087300];
 edge int8;
 node int8;
 BEGIN
@@ -503,6 +715,25 @@ type = 'conventional',
 mode = 'mixed'
 where oid in (select edge from tmp);
 
+-- Bizerte Port
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555077997,
+		555012953,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Bizerte Port',
+gauge = '1435',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
 -- Tinja to Menzel Nourguiba (El Fouladh steel works)
 -- freight only now
 with tmp as(
@@ -541,23 +772,142 @@ type = 'conventional',
 mode = 'mixed'
 where oid in (select edge from tmp);
 
--- Jebal Jelloud to La Goulette (dual gauge track)
+-- Port of Gabès
+
+-- link 555014969 to 555085427
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555014969 and b.oid = 555085427
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555014969,
+555085427,
+556000035
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000035;
+
+
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
-             555076508,
-		555085113,
+              555014969,
+		555085435,
 		false
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Jebal Jelloud - La Goulette (dual gauge track)',
+set line = 'Port of Gabès',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Borj Cedria - Erriadh
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555076567,
+		558000003,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Borj Cedria - Erriadh',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Sfax-Sidi Youssef Port
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555085974,
+		555017910,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sfax-Sidi Youssef Port',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Line 20: Jebal Jelloud - La Goulette
+-- insert link for dual gauge to La Goulette
+-- link 555085113 to 556042215
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555085113 and b.oid = 556042215
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555085113,
+556042215,
+556000024
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = 'dual'
+where oid = 556000024;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             555076508,
+		556042215,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 20: Jebal Jelloud - La Goulette',
 gauge = 'dual',
 status = 'open',
 comment = '',
 type = 'conventional',
 mode = 'mixed'
 where oid in (select edge from tmp);
+
+-- Port of Rodes (specialized berths)
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             556042215,
+		555085116,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Radès (specialized berths)',
+gauge = 'dual',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
 
 -- link dual track to access Jebal Jelloud station (1000 gauge)
 -- from 555076508 to 555076525
@@ -590,7 +940,7 @@ SELECT X.* FROM pgr_dijkstra(
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Jebal Jelloud - Port La Goulette Sud (metre <-> dual gauge)',
+set line = 'Line 20: Jebal Jelloud - La Goulette (metre <-> dual gauge)',
 gauge = '1000',
 status = 'open',
 comment = '',
@@ -616,68 +966,8 @@ type = 'conventional',
 mode = 'mixed'
 where oid in (select edge from tmp);
 
--- insert link for dual guage to standard to La Goulette
--- link 555085113 to 555042215
-with tmp as
-(
-select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555085113 and b.oid = 555042215
-)
-insert into africa_osm_edges
-select 
-a.line,
-a.country,
-round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
-555085113,
-555042215,
-556000023
-from tmp as a;
 
-update africa_osm_edges set
-type = 'conventional',
-gauge = '1435'
-where oid = 556000023
-
--- insert link for dual guage to metre to La Goulette
--- link 
-with tmp as
-(
-select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555085113 and b.oid = 556042215
-)
-insert into africa_osm_edges
-select 
-a.line,
-a.country,
-round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
-555085113,
-556042215,
-556000024
-from tmp as a;
-
-update africa_osm_edges set
-type = 'conventional',
-gauge = '1000'
-where oid = 556000024
-
--- From dual gauge to Port La Goulette - Sud 1435
-with tmp as(
-SELECT X.* FROM pgr_dijkstra(
-                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
-             555085113,
-		555042215,
-		false
-		) AS X
-		ORDER BY seq)
-update africa_osm_edges
-set line = 'dual gauge - Port La Goulette Sud (standard gauge)',
-gauge = '1435',
-status = 'open',
-comment = '',
-type = 'conventional',
-mode = 'mixed'
-where oid in (select edge from tmp);
-
-
--- From dual gauge to Port La Goulette - Sud 1000
+-- Port of Rades (speciliazed berths)
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
@@ -687,12 +977,30 @@ SELECT X.* FROM pgr_dijkstra(
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'dual gauge - Port La Goulette Sud (metre gauge)',
-gauge = '1000',
+set line = 'Port of Radès',
+gauge = 'dual',
 status = 'open',
 comment = '',
 type = 'conventional',
-mode = 'mixed'
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Port of Rades (container terminal)
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555064403,
+		555064404,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Radès (container terminal)',
+gauge = 'dual',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
 where oid in (select edge from tmp);
 
 -- Line 6 Tunis (Jebal Jelloud) - Kasserine metre gauge
@@ -757,7 +1065,7 @@ mode = 'freight'
 where oid in (select edge from tmp);
 
 
--- Line 7 Bir Kassa - Port La Goulette Sud (metre gauge)
+-- Line 7 Bir Kassa - La Goulette
 
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
@@ -768,7 +1076,7 @@ SELECT X.* FROM pgr_dijkstra(
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Line 7: Bir Kassa - Port La Goulette Sud',
+set line = 'Line 7: Bir Kassa - La Goulette',
 gauge = '1000',
 status = 'open',
 comment = '',
@@ -815,7 +1123,7 @@ update africa_osm_edges set
 type = 'conventional',
 gauge = '1000',
 status = 'open'
-where oid = 556000026
+where oid = 556000026;
 
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
@@ -855,7 +1163,7 @@ update africa_osm_edges set
 type = 'conventional',
 gauge = '1000',
 status = 'open'
-where oid = 556000027
+where oid = 556000027;
 
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
@@ -917,7 +1225,7 @@ update africa_osm_edges set
 type = 'conventional',
 gauge = '1000',
 status = 'open'
-where oid = 556000028
+where oid = 556000028;
 
 -- change source vertex of line 555054793 to node 556064498
 -- simplify routing into M'Saken from Sousse (Line 12)
@@ -944,6 +1252,25 @@ type = 'conventional',
 mode = 'mixed'
 where oid in (select edge from tmp);
 
+-- Sousse Port
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555126661,
+		555126662,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sousse Port',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
 -- Line 13 Ghraiba - Tozeur
 -- insert link between 555023109 and 555081180
 with tmp as
@@ -964,7 +1291,7 @@ update africa_osm_edges set
 type = 'conventional',
 gauge = '1000',
 status = 'open'
-where oid = 556000029
+where oid = 556000029;
 
 -- change source vertex of line 555054793 to node 556064498
 -- simplify routing into M'Saken from Sousse (Line 12)
@@ -1059,6 +1386,566 @@ SELECT X.* FROM pgr_dijkstra(
 		ORDER BY seq)
 update africa_osm_edges
 set line = 'M''dhilla - M''dhilla Mine',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- M'dhilla to M'dhilla Phosphate Works (freight)
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555085510,
+		555017810,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = ' M''dhilla to M''dhilla Phosphate Works',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Kasserine to Tabeddit
+-- Freight only. See: https://commons.wikimedia.org/wiki/File:Reseau_cft_tunisie.svg
+-- Also confirmed no passenger services in the SNCFT online timetable for this part of Line  15
+
+-- simplify routing from Kasserine onto Line 15 (Metlaoui)
+-- link 555055078 to 555016261
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555055078 and b.oid = 555016261
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555055078,
+555016261,
+556000030
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000030;
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555055078,
+		556062228,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 15: Kasserine - Tabeditt',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Line 16: Tabediit - Redayef
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555085744,
+		555062230,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 16: Tabediit - Redayef',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Redeyef Mine
+-- missing link between 555085801 and 555085781
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555085801 and b.oid = 555085781
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555085801,
+555085781,
+556000031
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000031;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555062230,
+		555085780,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Redayef - Redayef Mine',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Line 15: Tabeditt - Metlaoui
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            556062228,
+		555071169,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 15: Tabeditt - Metlaoui',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Metlaoui Phosphate Washing Plant
+-- link 555017833 to 555071169
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555017833 and b.oid = 555071169
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555017833,
+555071169,
+556000032
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000032
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555071169,
+		555085679,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Metlaoui Phosphate Washing Plant',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Line 18: M'Saken - Moknine
+-- appears to be disused (certainly for passenger services)
+-- unclear whether used for freight at all
+-- link for routing from 555064497 to 555002662
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555064497 and b.oid = 555002662
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555064497,
+555002662,
+556000033
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'disused'
+where oid = 556000033;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555064497,
+		555064505,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 18: M''Saken - Moknine',
+gauge = '1000',
+status = 'disused',
+comment = 'Could be used for freight?',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Line 22: Sousse - Mahdia
+
+-- Link to route from Sousse Sud to Mahdia line
+-- link 555070155 to 555029728
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555070155 and b.oid = 555029728
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555070155,
+555029728,
+556000034
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000034;
+
+-- to Monastir
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555070155,
+		555022961,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 22: Sousse - Monastir (Sahel Metro)',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- to Mahdia
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555095691,
+		555010695,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 22: Monastir - Mahdia (Sahel Metro)',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Line 21: Gafsa - El Aouinet
+-- appears to be freight only
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555085641,
+		555118020,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line 21: Gafsa - El Aouinet',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Beja Tunisian Sugar Company, Tunisian Yeast Company
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555078198,
+		555078177,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Beja - Food Manufacturers',
+gauge = '1435',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Ginor (Ben Bachir) - Sugar Manufacture And Refining
+-- link 555086757 to 556055347
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555086757 and b.oid = 556055347
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555086757,
+556055347,
+556000036
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1435',
+status = 'open'
+where oid = 556000036;
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            556055347,
+		555086758,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ginor (Sugar Manufacture/Refining)',
+gauge = '1435',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Bizerte Cement
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555078008,
+		555012925,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Bizerte Cement',
+gauge = '1435',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Enfidha Cement
+-- link 555013268 to 555086266
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 555013268 and b.oid = 555086266
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+555013268,
+555086266,
+556000037
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000037;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555086266,
+		555086349,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Enfidha Cement',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Sfax Zone Industrielle Poudrière 1
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555085985,
+		555017951,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sfax Zone Industrielle Poudrière 1',
+gauge = '1000',
+status = 'open',
+comment = 'Appears to serve a specific facility but name and function unknown.',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Thyna salt works
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+          555085939 ,
+		555017902,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Thyna salt works',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Tunisian Chemical Group and TIFERT
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+          555081131 ,
+		555015049,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tunisian Chemical Group and TIFERT',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+          555085891 ,
+		555017888,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tunisian Chemical Group and TIFERT',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Gabès Cement Company
+-- link 556085460 to 555085425
+with tmp as
+(
+select st_makeline(a.geom, b.geom) as line, a.country from africa_osm_nodes a, africa_osm_nodes b where a.oid = 556085460 and b.oid = 555085425
+)
+insert into africa_osm_edges
+select 
+a.line,
+a.country,
+round(st_lengthspheroid(a.line, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2) as length,
+556085460,
+555085425,
+556000038
+from tmp as a;
+
+update africa_osm_edges set
+type = 'conventional',
+gauge = '1000',
+status = 'open'
+where oid = 556000038;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           556085460,
+		555017763,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Gabès Cement Company',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Umm al-Arais Phosphate Mine
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555082943,
+		555082944,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Umm al-Arais Phosphate Mine',
+gauge = '1000',
+status = 'open',
+comment = '',
+type = 'conventional',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Jérissa Iron Ore Mine
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555087300,
+		555118034,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Jérissa Iron Ore Mine',
 gauge = '1000',
 status = 'open',
 comment = '',
