@@ -24,5 +24,15 @@ Progress:
   - [ ] Abandoned lines (defer)
   - [ ] Proposed lines (defer)
   - [ ] Under Construction lines (defer)
-- [ ] Tunisia (in progress)
+- [ ] Tunisia
+  - [x] Open lines - passenger and freight - including line names and gauge
+  - [x] Stations, ports and major freight destinations
+  - [x] Station names additionally in Latin script where Arabic only
+  - [ ] Tram/light rail (defer)
+  - [ ] Identify closed/missing stations (defer)
+  - [ ] Speed cost (defer)
+  - [x] Disused lines (some)
+  - [ ] Abandoned lines (defer)
+  - [ ] Proposed lines (defer)
+  - [ ] Under Construction lines (defer)
 
