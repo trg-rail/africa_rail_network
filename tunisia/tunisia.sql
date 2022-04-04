@@ -581,13 +581,314 @@ railway = 'station'
 where oid = 555054498;
 
 update africa_osm_nodes
+set name = 'M''Saken',
+railway = 'station'
+where oid = 555054468;
+
+update africa_osm_nodes
+set name = 'Kerker كركر',
+railway = 'station'
+where oid = 555054501;
+
+update africa_osm_nodes
+set name = 'El Jem الجم',
+railway = 'station'
+where oid = 555054505;
+
+update africa_osm_nodes
+set name = 'La Hencha الحنشة',
+railway = 'station'
+where oid = 555054506;
+
+update africa_osm_nodes
+set name = 'Dokhane دخان',
+railway = 'station'
+where oid = 555036538;
+
+update africa_osm_nodes
+set name = 'Sidi Salah سيدي صالح',
+railway = 'station'
+where oid = 555036616;
+
+update africa_osm_nodes
+set name = 'Sakiet Ezzit ساقية الزيت',
+railway = 'station'
+where oid = 555054507;
+
+update africa_osm_nodes
+set name = 'Sfax صفاقس',
+railway = 'station'
+where oid = 555054508;
+
+update africa_osm_nodes
+set name = 'Sidi Abid سيدي عبيد',
+railway = 'station'
+where oid = 555036542;
+
+update africa_osm_nodes
+set name = 'Gargour قرقور',
+railway = 'station'
+where oid = 555036541;
+
+update africa_osm_nodes
+set name = 'Mahares المحرس',
+railway = 'station'
+where oid = 555054509;
+
+update africa_osm_nodes
+set name = 'Chaal الشعال',
+railway = 'station'
+where oid = 555036540;
+
+update africa_osm_nodes
+set name = 'Hamada الحمادة',
+railway = 'station'
+where oid = 555054512;
+
+update africa_osm_nodes
+set name = 'Skhira الصخيرة',
+railway = 'station'
+where oid = 555054513;
+
+update africa_osm_nodes
+set name = 'Aouinet العوينات',
+railway = 'station'
+where oid = 555036617;
+
+update africa_osm_nodes
+set name = 'Ghannouch غنوش',
+railway = 'station'
+where oid = 555054514;
+
+update africa_osm_nodes
+set name = 'El Guetar القطار',
+railway = 'station'
+where oid = 555054521;
+
+update africa_osm_nodes
+set name = 'Gafsa قفصة',
+railway = 'station'
+where oid = 555054520;
+
+update africa_osm_nodes
+set name = 'Degueche محطة دقاش',
+railway = 'station'
+where oid = 555020020;
+
+update africa_osm_nodes
+set name = 'Magroun مقرون',
+railway = 'station'
+where oid = 555036591;
+
+update africa_osm_nodes
+set name = 'Oued El Ksab (23/24) وادي القصب',
+railway = 'station'
+where oid = 555036572;
+
+update africa_osm_nodes
+set name = 'Zannouch زانوش',
+railway = 'station'
+where oid = 555028107;
+
+update africa_osm_nodes
+set name = 'Sened السند',
+railway = 'station'
+where oid = 555054519;
+
+update africa_osm_nodes
+set name = 'Menzel Bouzaiane منزل بوزيان',
+railway = 'station'
+where oid = 555018638;
+
+update africa_osm_nodes
+set name = 'Maknassy المكناسي',
+railway = 'station'
+where oid = 555054517;
+
+update africa_osm_nodes
+set name = 'El Kerma الكرمة',
+railway = 'station'
+where oid = 555036570;
+
+update africa_osm_nodes
+set name = 'Mezzouna المزونة',
+railway = 'station'
+where oid = 555018722;
+
+update africa_osm_nodes
+set name = 'Founi الفوني',
+railway = 'station'
+where oid = 555054511;
+
+update africa_osm_nodes
+set name = 'Om El Arais محطة أم العرائس',
+railway = 'station'
+where oid = 555062284;
+
+update africa_osm_nodes
+set name = 'Thelepte',
+railway = 'station'
+where oid = 555062229;
+
+update africa_osm_nodes
+set name = 'Sbeitla',
+railway = 'station'
+where oid = 555062206;
+
+update africa_osm_nodes
+set name = 'Foussana فوسانة',
+railway = 'station'
+where oid = 555018502;
+
+update africa_osm_nodes
+set name = 'Haidra حيدرة',
+railway = 'station'
+where oid = 555018498;
+
+update africa_osm_nodes
+set name = 'Kalaat Khasba القلعة الخصبة',
+railway = 'station'
+where oid = 555018488;
+
+update africa_osm_nodes
+set name = 'Gouraia قوراية',
+railway = 'station'
+where oid = 555033638;
+
+update africa_osm_nodes
+set name = 'Dahmani الدهماني',
+railway = 'station'
+where oid = 555062253;
+
+update africa_osm_nodes
+set name = 'Les Zouarines الزوارين',
+railway = 'station'
+where oid = 555062254;
+
+update africa_osm_nodes
+set name = 'Les Salines الملاحة',
+railway = 'station'
+where oid = 555077685;
+
+update africa_osm_nodes
+set name = 'Le Sers السرس',
+railway = 'station'
+where oid = 555062250;
+
+update africa_osm_nodes
+set name = 'Sidi Bou Rouis سيدي بورويس',
+railway = 'station'
+where oid = 555062249;
+
+update africa_osm_nodes
+set name = 'Le Krib الكريب',
+railway = 'station'
+where oid = 555054841;
+
+update africa_osm_nodes
+set name = 'El Akhouat الخوات',
+railway = 'station'
+where oid = 555018405;
+
+update africa_osm_nodes
+set name = 'Gaafour قعفور',
+railway = 'station'
+where oid = 555018341;
+
+update africa_osm_nodes
+set name = 'Sidi Ayed سيدي عياد',
+railway = 'station'
+where oid = 555018398;
+
+update africa_osm_nodes
+set name = 'El Aroussa العروسة',
+railway = 'station'
+where oid = 555018337;
+
+update africa_osm_nodes
+set name = 'Djelida الجليدة',
+railway = 'station'
+where oid = 555056487;
+
+update africa_osm_nodes
+set name = 'Bou Arada بوعرادة',
+railway = 'station'
+where oid = 555062247;
+
+update africa_osm_nodes
+set name = 'Tarf Echena طرف الشانة',
+railway = 'station'
+where oid = 555036588;
+
+update africa_osm_nodes
+set name = 'Thibica ثبيقة',
+railway = 'station'
+where oid = 555036625;
+
+update africa_osm_nodes
+set name = 'Pont Du Fahs الفحص',
+railway = 'station'
+where oid = 555056500;
+
+update africa_osm_nodes
+set name = 'Bir M''Cherga بئر مشارقة',
+railway = 'station'
+where oid = 555058932;
+
+update africa_osm_nodes
+set name = 'Cheylus',
+railway = 'station'
+where oid = 555018250;
+
+update africa_osm_nodes
+set name = 'Oudna أوذنة',
+railway = 'station'
+where oid = 555056450;
+
+update africa_osm_nodes
+set name = 'Khledia الخليدية',
+railway = 'station'
+where oid = 555062246;
+
+update africa_osm_nodes
+set name = 'Nassen محطة نعسان',
+railway = 'station'
+where oid = 555062245;
+
+update africa_osm_nodes
+set name = 'Bir Kassa بئر القصعة',
+railway = 'station'
+where oid = 555018256;
+
+update africa_osm_nodes
 set name = '',
 railway = 'station'
 where oid = ;
 
+update africa_osm_nodes
+set name = '',
+railway = 'station'
+where oid = ;
 
+update africa_osm_nodes
+set name = '',
+railway = 'station'
+where oid = ;
 
+update africa_osm_nodes
+set name = '',
+railway = 'station'
+where oid = ;
 
+update africa_osm_nodes
+set name = '',
+railway = 'station'
+where oid = ;
+
+update africa_osm_nodes
+set name = '',
+railway = 'station'
+where oid = ;
 
 
 -- update where duplicate or unwanted station nodes
@@ -596,13 +897,13 @@ set name = NULL,
 railway = NULL,
 gauge =  NULL,
 facility = NULL
-where oid in (555062158, 555018214, 555036589, 555062124, 558000003, 555022967, 555036566 )
+where oid in (555062158, 555018214, 555036589, 555062124, 558000003, 555022967, 555036566, 555036571, 555018510, 555036553, 555018473, 555018335, 555018252, 555018253)
 
 -- updated if unnamed
 update africa_osm_nodes
 set name = 'unnamed halt',
 railway = 'halt'
-where oid in (555018215, 555055341, 555018213, 555002558)
+where oid in (555018215, 555055341, 555018213, 555002558, 555062233, 555054522)
 
 
 -- ports
@@ -816,7 +1117,7 @@ SELECT ST_SetSRID( ST_Point(8.00607,35.66806), 4326)
 -- copy Sidi Smail 555055345 to 555028994
 -- copy 555055344 to 555029000
 -- copy Beja Voy 555055343 to 555028951
--- copy Beja Marchandises 555036582 to 55502895122
+-- copy Beja Marchandises 555036582 to 5550289512
 -- copy Jalta 555036583 to 555028132
 -- copy Tinja 555060726 to 555028057
 -- copy Tebourba 555062159 to 555066801
@@ -840,14 +1141,40 @@ SELECT ST_SetSRID( ST_Point(8.00607,35.66806), 4326)
 -- copy Moknine Griba 555012782 to 555119554
 -- copy Moknine Voyageurs 555017972 to 555119556
 -- copy Bekalta 555036569 to 555023969
+-- copy Kerker 555054501 to 555002675
+-- copy El Jem 555054505 to 555034464
+-- copy Sidi Salah 555036616 to 555072139
+-- copy Sfax 555054508 to 5550343652
+-- copy Gargour 555036541 to 555038868
+-- Chaal copy 555036540 to 555034396
+-- copy Hamada 555054512 to 555034395
+-- copy Skhira 555054513 to 555034392
+-- copy Ghannouch 555054514 to 555034358
+-- copy El Fejij 555028105 to 555060297
+-- copy El Guetar 555054521 to 555037264
+-- copy Gafsa 555054520 to 555084251
+-- copy Degueche 555020020 to 555016891
+-- copy Selja 555058893 to 555041646
+-- copy Maknassy 555054517 to 555047468
+-- copy Om El Arais 555062284 to 555037272
+-- copy Thelepte 555062229 to 555041595
+-- copy Fej et Tameur 555033588 to 555043366
+-- copy Dahmani 555062253 to 555043302
+-- copy Le Sers  555062250 to 555028221
+-- copy Sidi Bou Rouis 555062249 to 555043152
+-- copy Le Krib 555054841 to 555028262
+-- copy Bou Arada 555062247 to 555042964
+-- copy Depienne 555062216 to 555028202
+-- copy Bir M'Cherga 555058932 to 555028233
+-- copy Nassen 555062245 to 555002439
 
 DO $$ DECLARE
 -- create new station nodes
 -- note: must not be a node coincident with the closest point (reassign that node as a station instead)
--- nodes INT8 ARRAY DEFAULT ARRAY [557000001, 555042215, 555062252, 555054493, 555060776, 555054474, 555064498, 555060747, 557000002, 557000003, 555054466, 555055347, 555085460, 555062244, 555062243, 555055345, 555055344, 555055343, 555036582, 555036583, 555060726, 555062159, 555036549, 555054490, 555036543, 555054492, 555054494, 555054495, 555054496, 555054477, 555036559, 555054467, 555017961, 555017957, 555017956, 555036622, 555036574, 555012781, 555012779, 555012782, 555017972, 555036569];
--- edges INT8 ARRAY DEFAULT ARRAY [555084267, 555025933, 555043283, 555042264, 555084260, 555045726, 555041978, 555041413, 555041428, 555063054, 555054792, 555029019, 555034358, 555029005, 555042741, 555028994, 555029000, 555028951, 5550289512, 555028132, 555028057, 555066801, 555026405, 555053037, 555053034, 555092059, 555042227, 555042187, 555042204, 555042138, 555042094, 555091840, 555042064, 555042052, 555042054, 555042070, 555041972, 555119544, 555119549, 555119554, 555119556, 555023969];
-nodes INT8 ARRAY DEFAULT ARRAY [555036569];
-edges INT8 ARRAY DEFAULT ARRAY [555023969];
+-- nodes INT8 ARRAY DEFAULT ARRAY [557000001, 555042215, 555062252, 555054493, 555060776, 555054474, 555064498, 555060747, 557000002, 557000003, 555054466, 555055347, 555085460, 555062244, 555062243, 555055345, 555055344, 555055343, 555036582, 555036583, 555060726, 555062159, 555036549, 555054490, 555036543, 555054492, 555054494, 555054495, 555054496, 555054477, 555036559, 555054467, 555017961, 555017957, 555017956, 555036622, 555036574, 555012781, 555012779, 555012782, 555017972, 555036569, 555054501, 555054505, 555036616, 555054508, 555036541, 555036540, 555054512, 555054513, 555054514, 555028105, 555054521, 555054520, 555020020, 555058893, 555054517, 555062284, 555062229, 555033588, 555062253, 555062250, 555062249, 555054841, 555062247, 555062216, 555058932, 555062245];
+-- edges INT8 ARRAY DEFAULT ARRAY [555084267, 555025933, 555043283, 555042264, 555084260, 555045726, 555041978, 555041413, 555041428, 555063054, 555054792, 555029019, 555034358, 555029005, 555042741, 555028994, 555029000, 555028951, 5550289512, 555028132, 555028057, 555066801, 555026405, 555053037, 555053034, 555092059, 555042227, 555042187, 555042204, 555042138, 555042094, 555091840, 555042064, 555042052, 555042054, 555042070, 555041972, 555119544, 555119549, 555119554, 555119556, 555023969, 555034464, 555072139, 555034365, 555038868, 555034396, 555034395, 555034392, 555034358, 555060297, 555037264, 555084251, 555016891, 555041646, 555047468, 555037272, 555041595, 555043366, 555043302, 555028221, 555043152, 555028262, 555042964, 555028202, 555028233, 555002439];
+nodes INT8 ARRAY DEFAULT ARRAY [555062245];
+edges INT8 ARRAY DEFAULT ARRAY [555002439];
 node INT8;
 edge INT8;
 idx INT;
