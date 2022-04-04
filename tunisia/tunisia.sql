@@ -196,7 +196,7 @@ railway = 'station'
 where oid = 555063121;
 
 update africa_osm_nodes
-set name = 'Jedeida',
+set name = 'الجديدة Jedeida',
 railway = 'station'
 where oid = 555013249;
 
@@ -861,29 +861,29 @@ railway = 'station'
 where oid = 555018256;
 
 update africa_osm_nodes
-set name = '',
+set name = 'Oued Zarga وادي الزرقاء',
 railway = 'station'
-where oid = ;
+where oid = 555018177;
 
 update africa_osm_nodes
-set name = '',
+set name = 'Mejez El Bab مجاز الباب',
 railway = 'station'
-where oid = ;
+where oid = 555018163;
 
 update africa_osm_nodes
-set name = '',
+set name = 'Borj Toumi برج التومي',
 railway = 'station'
-where oid = ;
+where oid = 555018167;
 
 update africa_osm_nodes
-set name = '',
+set name = 'Maagen Bel Abbes ماجل بلعباس',
 railway = 'station'
-where oid = ;
+where oid = 555020004;
 
 update africa_osm_nodes
-set name = '',
+set name = 'Jemmal جمّال',
 railway = 'station'
-where oid = ;
+where oid = 555012789;
 
 update africa_osm_nodes
 set name = '',
@@ -897,7 +897,7 @@ set name = NULL,
 railway = NULL,
 gauge =  NULL,
 facility = NULL
-where oid in (555062158, 555018214, 555036589, 555062124, 558000003, 555022967, 555036566, 555036571, 555018510, 555036553, 555018473, 555018335, 555018252, 555018253)
+where oid in (555062158, 555018214, 555036589, 555062124, 558000003, 555022967, 555036566, 555036571, 555018510, 555036553, 555018473, 555018335, 555018252, 555018253, 555053717)
 
 -- updated if unnamed
 update africa_osm_nodes
