@@ -164,9 +164,8 @@ set name = 'La Pecherie المصيدة',
 railway = 'station'
 where oid = 555063122;
 
-
 update africa_osm_nodes
-set name = ' Menzel Bourguiba محطة منزل بورقيبة',
+set name = 'Menzel Bourguiba محطة منزل بورقيبة',
 railway = 'station'
 where oid = 555058940;
 
@@ -196,7 +195,7 @@ railway = 'station'
 where oid = 555063121;
 
 update africa_osm_nodes
-set name = 'الجديدة Jedeida',
+set name = 'Jedeida الجديدة',
 railway = 'station'
 where oid = 555013249;
 
@@ -2763,6 +2762,22 @@ and st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gau
 or
 st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = 'dual'))
 and railway in ('station', 'halt', 'stop');
+
+
+-- decided to split out arabic and english/latin names to separate fields
+
+UPDATE africa_osm_nodes
+SET    name_arabic = (
+   SELECT array_to_string(ARRAY(SELECT regexp_matches(name, '[\u0600-\u06FF]+', 'g')), ' ')
+   )
+ where country = 'Tunisia';
+ 
+ UPDATE africa_osm_nodes
+SET    name = (
+   SELECT array_to_string(ARRAY(SELECT regexp_matches(name, '[^\u0600-\u06FF]+', 'g')), ' ')
+   )
+ where country = 'Tunisia';
+ 
 
 -- extract tables for tunisia (backup)
 create table tunisia_osm_edges as select * from africa_osm_edges where country like '%Tunisia%';

@@ -1060,6 +1060,20 @@ set gauge = '1435'
 where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1435'))
 and railway in ('station', 'halt', 'stop');
 
+-- decided to split out arabic and english/latin names to separate fields
+UPDATE africa_osm_nodes
+SET    name_arabic = (
+   SELECT array_to_string(ARRAY(SELECT regexp_matches(name, '[\u0600-\u06FF]+', 'g')), ' ')
+   )
+ where country like '%Morocco%';
+ 
+ UPDATE africa_osm_nodes
+SET    name = (
+   SELECT array_to_string(ARRAY(SELECT regexp_matches(name, '[^\u0600-\u06FF]+', 'g')), ' ')
+   )
+ where country like '%Morocco%';
+
+
 -- extract tables for morocco (backup)
 create table morocco_osm_edges as select * from africa_osm_edges where country like '%Morocco%';
 create table morocco_osm_nodes as select * from africa_osm_nodes where country like '%Morocco%';
