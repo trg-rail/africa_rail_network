@@ -48,3 +48,5 @@ Progress:
   - [ ] Abandoned lines (defer)
   - [ ] Proposed lines (defer)
   - [ ] Under Construction lines (defer)
+- [ ] West Africa (excluding Nigeria) - Mauritania, Senegal, Mali, Guinea, Sierra Leone, Liberia, Burkina Faso, Côte d'Ivoire, Ghana, Togo, Benin
+  - [x] Mauritania (single line)
