@@ -52,3 +52,7 @@ Progress:
   - [x] Mauritania (single line)
   - [x] Senegal - new standard gauge and metre gauge (open/rehabilitation/disused)
   - [x] Mali - disused metre gauge (single line - Mali portion of Dakar-Niger railway)
+  - [x] Guinea - standard gauge and metre gauge lines (open). Primarily mining lines.
+  - [x] Sierra Leone - single 1067mm freight line between Pepel Port and iron ore mines in Tonkolili
+  - [x] Liberia - two standard gauge freight lines: Bong Mine Railway (believed to be disused) and Buchanan Port to Tokadeh mine (open)
+  - [x] Côte d'Ivoire and Burkina Faso (metre gauge Abidjan-Ouagadougou railway
