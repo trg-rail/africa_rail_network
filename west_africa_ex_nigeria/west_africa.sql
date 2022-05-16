@@ -1105,6 +1105,249 @@ where oid IN (555008518, 555008519, 555008520, 555008522, 555030070, 555010330, 
 -- copy Agboville 555029881 to 555073728
 select rn_copy_node(array[555029881], array[555073728]);
 
+-- Ghana
+
+-- Sekondi - Tarkwa
+
+-- duplicated station
+update africa_osm_nodes
+set railway = null,
+name = null
+where oid in (555030599, 555055952);
+
+update africa_osm_nodes
+set name = 'Sekondi',
+railway = 'station'
+where oid = 555125208;
+
+
+-- in use for freight and passenger services
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555125208,
+		555037055,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sekondi-Tarkwa',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Takoradi-Kojokrom
+
+update africa_osm_nodes
+set railway = 'station'
+where oid = 555015670;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555015670,
+		555019626,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Takoradi - Kojokrom',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Takoradi Port
+
+update africa_osm_nodes
+set name = 'Takoradi Port',
+facility = 'port',
+railway = 'stop'
+where oid = 555125142;
+
+-- split  555122573 at 555125143
+select rn_split_edge(array[555122573], array[555125143]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555125143,
+		555125142,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Takoradi Port',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Tarkwa-Kumasi
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             555037055,
+		555102690,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tarkwa-Kumasi',
+gauge = '1067',
+status = 'disused',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Dunkwa-Awaso
+
+-- split 555036743 at 555092206
+select rn_split_edge(array[555036743], array[555092206]);
+
+update africa_osm_nodes
+set name = 'Awaso (Bauxite Mine)',
+facility = 'mine',
+railway = 'stop'
+where oid = 555092207;
+
+-- disused
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             555082645,
+		555092207,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Dunkwa-Awaso (Bauxite Mine)',
+gauge = '1067',
+status = 'disused',
+type = 'conventional',
+comment = '',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Achimota-Nsawam
+
+update africa_osm_nodes
+set railway = 'station',
+name = 'Nsawam'
+where oid = 555138852;
+
+-- copy Achmota Station 555062400 to 555027729
+select rn_copy_node(array[555062400], array[555027729]);
+
+-- fix missing link
+-- copy 555077465 to 555027697
+select rn_copy_node(array[555077465], array[555027697]);
+-- change target of 5550277292 to 556077465
+select rn_change_target(5550277292, 556077465);
+-- split 
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              556062400,
+		555138852,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Achimota-Nsawam',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- split 555027696 at 555128096
+-- split 555098373 at 555128098
+-- split 5550277291 at 555128099
+select rn_split_edge(array[555027696, 555098373, 5550277291], array[555128096, 555128098, 555128099]);
+
+-- Accra-Achimota
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555012845,
+		556062400,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Accra-Achimota',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- duplicate stop
+update africa_osm_nodes
+set railway = null,
+name = null
+where oid = 555015640;
+
+-- Achimota-Tema
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555128099,
+		555062951,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Achimota-Tema',
+gauge = '1067',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- metre gauge cement works at Aflao to the port of Lomé in Togo
+-- run by Togo Rail
+
+update africa_osm_nodes
+set facility = 'manufacturing',
+name = 'Diamond Cement Aflao',
+railway = 'stop'
+where oid = 555122889;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555122889,
+		555060546,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Diamond Cement Alfao',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = 'metre gauge line to serve cement works at Aflao to the port of Lomé in Togo. Run by Togo Rail.',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- copy stations
+-- copy Adjen Kotoku 555062946 to 555122404
+select rn_copy_node(array[555062946], array[555122404]);
+
 -- check gauge in these countries
 update africa_osm_nodes
 set gauge = '1435'
