@@ -55,4 +55,5 @@ Progress:
   - [x] Guinea - standard gauge and metre gauge lines (open). Primarily mining lines.
   - [x] Sierra Leone - single 1067mm freight line between Pepel Port and iron ore mines in Tonkolili
   - [x] Liberia - two standard gauge freight lines: Bong Mine Railway (believed to be disused) and Buchanan Port to Tokadeh mine (open)
-  - [x] Côte d'Ivoire and Burkina Faso (metre gauge Abidjan-Ouagadougou railway
+  - [x] Côte d'Ivoire and Burkina Faso (metre gauge Abidjan-Ouagadougou railway)
+  - [x] Ghana - added parts of 1067 narrow gauge thought to be operational (some disused added). Standard gauge under construction (defer).
