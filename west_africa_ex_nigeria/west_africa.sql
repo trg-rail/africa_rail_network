@@ -1079,6 +1079,12 @@ where oid in (select edge from tmp);
 -- add link
 select rn_insert_edge(555101167, 555127725, 556000058);
 
+update africa_osm_edges
+set type = 'conventional',
+mode = 'mixed',
+status = 'disused'
+where oid = 556000058;
+
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
@@ -1348,6 +1354,313 @@ where oid in (select edge from tmp);
 -- copy Adjen Kotoku 555062946 to 555122404
 select rn_copy_node(array[555062946], array[555122404]);
 
+-- Togo
+-- node for Diamond Cement Dalavé
+insert into africa_osm_nodes (
+oid, railway, name, country, gauge, facility, geom)
+ values (
+ 557000009,
+ 'stop',
+ 'Diamond Cement Dalavé',
+ 'Togo',
+ '1000',
+ 'manufacturing',
+ ST_SetSRID(ST_Point(1.28660,6.34853), 4326)
+ )
+;
+
+select rn_copy_node(array[557000009], array[555048154]);
+
+-- Tabligbo Cement Quarry
+update africa_osm_nodes
+set name = 'Tabligbo Cement Quarry',
+railway = 'stop',
+facility = 'quarry',
+gauge = '1000'
+where oid = 555040738
+
+-- Tabligbo-Dalavé
+-- freight. Clicker stone from quarry to processing plant.
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555040738,
+		558000009,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tabligbo-Dalavé',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = 'Transport of clinker stone from quarry to processing plant. This is the only section of line believed to be in use with no transport to/from Lomé port',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Lomé to Lomé Port
+
+update africa_osm_nodes
+set name = 'Lomé Port',
+railway = 'stop',
+facility = 'port'
+where oid = 555084978;
+
+-- split 555062737 at 555070541
+-- split 555015628 at 555070542
+select rn_split_edge(array[555062737, 555015628], array[555070541, 555070542]);
+-- split 5550156282 at 555084977
+select rn_split_edge(array[5550156282], array[555084977]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555033214,
+		555084978,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lomé to Lomé Port',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = 'Togo Rail - Diamond Cement Alfao to Lomé Port',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Hahotoé–Kpémé railway (and branch to Kpogamé)
+-- Phosphate mines
+
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Hahotoé Phosphate Mine (SNPT)',
+facility = 'mine'
+where oid = 555007974;
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Kpogamé Phosphate Mine (SNPT)',
+facility = 'mine'
+where oid = 555082648;
+
+-- Kpémé phosphate processing plant and wharf 
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Kpémé phosphate processing plant and wharf (SNPT)',
+facility = 'port'
+where oid = 555090564;
+
+-- Hahotoé–Kpémé
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555007974,
+		555090564,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hahotoé–Kpémé',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = 'Phosphate transport',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Kpogamé branch
+
+-- split 555048233 at 555098781
+select rn_split_edge(array[555048233], array[555098781]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555098781,
+		555082648,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kpogamé branch (Phosphate mine)',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = 'Phosphate transport',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Lomé to Blitta
+-- disused
+
+update africa_osm_nodes
+set railway = 'stop',
+name = 'Blitta',
+facility = 'manufacturing'
+where oid = 555055663;
+
+-- link 555098911 to 555099396
+select rn_insert_edge(555098911, 555099396, 556000059);
+
+update africa_osm_edges
+set type = 'conventional',
+country = 'Togo',
+mode = 'freight',
+status = 'disused'
+where oid = 556000059;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+              555070547,
+		555055663,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lomé to Blitta',
+gauge = '1000',
+status = 'disused',
+type = 'conventional',
+comment = 'Believed to be out of use. Former freight line.',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Dalavé-Adétikopé
+-- believed disused
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             558000009 ,
+		555090555,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Dalavé-Adétikopé',
+gauge = '1000',
+status = 'disused',
+type = 'conventional',
+comment = 'Believed to be out of use. Former freight line.',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+
+-- Route into Lomé station
+-- believed disused
+
+-- split 555040177 at 555084961
+select rn_split_edge(array[555040177], array[555084961]);
+
+update africa_osm_nodes
+set name = 'Lomé'
+where oid = 555025501;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+             555033214,
+		555025501,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Route into Lomé station',
+gauge = '1000',
+status = 'disused',
+type = 'conventional',
+comment = 'Believed disused',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
+-- Benin
+
+-- Cotonou
+update africa_osm_nodes
+set name = 'Cotonou',
+railway = 'station'
+where oid = 555053738;
+
+
+-- Cotonou Port
+
+update africa_osm_nodes
+set name = 'Cotonou Port',
+railway = 'stop',
+facility = 'port'
+where oid = 555053747;
+
+-- Cotonou to Parakou
+-- freight only
+-- line to the port appears to be disused (google maps)
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555053738,
+		555031456,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Cotonou-Parakou',
+gauge = '1000',
+status = 'open',
+type = 'conventional',
+comment = '',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Cotonou-Cotonou Port
+-- disused
+
+-- split 555083191 at 555143779
+select rn_split_edge(array[555083191], array[555143779]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555053738,
+		555053747,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Cotonou-Cotonou Port',
+gauge = '1000',
+status = 'disused',
+type = 'conventional',
+comment = '',
+mode = 'freight'
+where oid in (select edge from tmp);
+
+-- Pahou-Ségbohoué
+-- assume abandoned 
+
+-- split 555063705 at 555142763
+select rn_split_edge(array[555063705], array[555142763]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555023593,
+		555145317,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pahou-Ségbohoué',
+gauge = '1000',
+status = 'abandoned',
+type = 'conventional',
+comment = 'Assumed abandoned.',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
 -- check gauge in these countries
 update africa_osm_nodes
 set gauge = '1435'
@@ -1363,6 +1676,7 @@ and country IN ('Mauritania',
 'Ghana',
 'Togo',
 'Benin') and railway in ('station', 'halt', 'stop');
+-- 
 
 update africa_osm_nodes
 set gauge = '1000'
@@ -1396,8 +1710,29 @@ and country IN ('Mauritania',
 
 
 -- extract tables for  (backup)
-create table egypt_osm_edges as select * from africa_osm_edges where country ;
-create table egypt_osm_nodes as select * from africa_osm_nodes where country ;
+create table westafrica_osm_edges as select * from africa_osm_edges where country IN ('Mauritania',
+'Senegal',
+'Mali',
+'Guinea',
+'Sierra Leone',
+'Liberia',
+'Burkina Faso',
+'Côte d''Ivoire',
+'Ghana',
+'Togo',
+'Benin');
+
+create table westafrica_osm_nodes as select * from africa_osm_nodes where country IN ('Mauritania',
+'Senegal',
+'Mali',
+'Guinea',
+'Sierra Leone',
+'Liberia',
+'Burkina Faso',
+'Côte d''Ivoire',
+'Ghana',
+'Togo',
+'Benin');
 
 -- test routing
 		SELECT X.*, a.line, a.status, a.gauge, b.railway, b.name FROM pgr_dijkstra(
