@@ -1615,6 +1615,32 @@ comment = '',
 mode = 'freight'
 where oid in (select edge from tmp);
 
+-- Lalo branch
+-- status unknown - assume freight
+
+update africa_osm_nodes
+set name = 'Lalo',
+railway = 'stop',
+facility = 'mine'
+where oid = 555030146;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555030142,
+		555030146,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lalo branch',
+gauge = '1000',
+status = 'unknown',
+type = 'conventional',
+comment = 'status unknown. Appears to access a mine (although OSM indicates that the branch has a military purpose).',
+mode = 'freight'
+where oid in (select edge from tmp);
+
 -- Cotonou-Cotonou Port
 -- disused
 
@@ -1661,6 +1687,28 @@ comment = 'Assumed abandoned.',
 mode = 'mixed'
 where oid in (select edge from tmp);
 
+-- Niger
+-- Niamey-Dosso
+-- The objective was to connect Niamey to the rail network in Benin - project stalled
+-- never used
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555033159,
+		555117179,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Niamey-Dosso',
+gauge = '1000',
+status = 'disused',
+type = 'conventional',
+comment = 'This section built 2014-2016. The objective was to connect Niamey to the rail network in Benin - project is stalled.',
+mode = 'mixed'
+where oid in (select edge from tmp);
+
 -- check gauge in these countries
 update africa_osm_nodes
 set gauge = '1435'
@@ -1675,7 +1723,8 @@ and country IN ('Mauritania',
 'Côte d''Ivoire',
 'Ghana',
 'Togo',
-'Benin') and railway in ('station', 'halt', 'stop');
+'Benin',
+'Niger') and railway in ('station', 'halt', 'stop');
 -- 
 
 update africa_osm_nodes
@@ -1691,7 +1740,8 @@ and country IN ('Mauritania',
 'Côte d''Ivoire',
 'Ghana',
 'Togo',
-'Benin') and railway in ('station', 'halt', 'stop');
+'Benin',
+'Niger') and railway in ('station', 'halt', 'stop');
 
 update africa_osm_nodes
 set gauge = '1067'
@@ -1706,7 +1756,8 @@ and country IN ('Mauritania',
 'Côte d''Ivoire',
 'Ghana',
 'Togo',
-'Benin') and railway in ('station', 'halt', 'stop');
+'Benin',
+'Niger') and railway in ('station', 'halt', 'stop');
 
 
 -- extract tables for  (backup)
@@ -1720,7 +1771,8 @@ create table westafrica_osm_edges as select * from africa_osm_edges where countr
 'Côte d''Ivoire',
 'Ghana',
 'Togo',
-'Benin');
+'Benin',
+'Niger');
 
 create table westafrica_osm_nodes as select * from africa_osm_nodes where country IN ('Mauritania',
 'Senegal',
@@ -1732,7 +1784,8 @@ create table westafrica_osm_nodes as select * from africa_osm_nodes where countr
 'Côte d''Ivoire',
 'Ghana',
 'Togo',
-'Benin');
+'Benin',
+'Niger');
 
 -- test routing
 		SELECT X.*, a.line, a.status, a.gauge, b.railway, b.name FROM pgr_dijkstra(
