@@ -57,3 +57,5 @@ Progress:
   - [x] Liberia - two standard gauge freight lines: Bong Mine Railway (believed to be disused) and Buchanan Port to Tokadeh mine (open)
   - [x] Côte d'Ivoire and Burkina Faso (metre gauge Abidjan-Ouagadougou railway)
   - [x] Ghana - added parts of 1067 narrow gauge thought to be operational (some disused added). Standard gauge under construction (defer).
+  - [x] Togo - several lines that are freight only currently (1067mm and 1000mm).
+  - [x] Benin - single 1000mm line in use for freight only.
