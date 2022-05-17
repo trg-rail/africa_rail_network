@@ -48,7 +48,7 @@ Progress:
   - [ ] Abandoned lines (defer)
   - [ ] Proposed lines (defer)
   - [ ] Under Construction lines (defer)
-- [ ] West Africa (excluding Nigeria) - Mauritania, Senegal, Mali, Guinea, Sierra Leone, Liberia, Burkina Faso, Côte d'Ivoire, Ghana, Togo, Benin
+- [ ] West Africa (excluding Nigeria) - Mauritania, Senegal, Mali, Guinea, Sierra Leone, Liberia, Burkina Faso, Côte d'Ivoire, Ghana, Togo, Benin, Niger
   - [x] Mauritania (single line)
   - [x] Senegal - new standard gauge and metre gauge (open/rehabilitation/disused)
   - [x] Mali - disused metre gauge (single line - Mali portion of Dakar-Niger railway)
@@ -59,3 +59,4 @@ Progress:
   - [x] Ghana - added parts of 1067 narrow gauge thought to be operational (some disused added). Standard gauge under construction (defer).
   - [x] Togo - several lines that are freight only currently (1067mm and 1000mm).
   - [x] Benin - single 1000mm line in use for freight only.
+  - [x] Niger - 1000mm line between Niamey-Dosso built 2014-16 intended to connect into Benin network. Project stalled and this is disused (services have never run).
