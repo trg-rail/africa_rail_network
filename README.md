@@ -60,3 +60,13 @@ Progress:
   - [x] Togo - several lines that are freight only currently (1067mm and 1000mm).
   - [x] Benin - single 1000mm line in use for freight only.
   - [x] Niger - 1000mm line between Niamey-Dosso built 2014-16 intended to connect into Benin network. Project stalled and this is disused (services have never run).
+- [ ] Nigeria
+  - [x] Open lines - passenger and freight - including line names and gauge
+  - [x] Stations, ports and major freight destinations
+  - [x] Subway/Tram/light rail
+  - [ ] Identify closed/missing stations (defer)
+  - [ ] Speed cost (defer)
+  - [x] Disused lines (some)
+  - [ ] Abandoned lines (defer)
+  - [ ] Proposed lines (defer)
+  - [x] Under Construction lines (some)
