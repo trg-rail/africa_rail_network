@@ -70,3 +70,15 @@ Progress:
   - [ ] Abandoned lines (defer)
   - [ ] Proposed lines (defer)
   - [x] Under Construction lines (some)
+- [ ] Cameroon
+  - [x] Open lines - passenger and freight - including line names and gauge
+  - [x] Stations, ports and major freight destinations
+  - [x] Disused lines
+  - [ ] Proposed lines (defer)
+- [ ] Gabon
+  - [x] Single route - Trans-Gabon Railway
+  - [ ] Proposed lines (defer)
+- [ ] Congo-Brazzaville (Republic of Congo)
+  - [x] Congo-Ocean Railway (COR) and Bilinga – Dolisie  loop
+  - [x] Mont Bélo - Mbinda branch (rehabilitation)
+  - [ ] Proposed lines (defer)
