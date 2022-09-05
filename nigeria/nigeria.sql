@@ -12,22 +12,6 @@ select gauge, count(*) from africa_osm_edges where country like '%Nigeria%' grou
 -- trap running entire script
 update rubbish set rubish
 
-
--- update station nodes with english names (downloaded from OSM)
-update africa_osm_nodes
-set name_arabic = name
-where railway in ('station', 'stop', 'halt')
-and country = 'Nigeria'
-
-update africa_osm_nodes a
-set name = b."name:en"
-from osm_railway_stations_Nigeria b
-where
-name_arabic = b.name 
-and a.railway in ('station', 'stop', 'halt')
-and a.country = 'Nigeria'
-
-
 -- features
 -- tunnel
 update africa_osm_edges
@@ -198,6 +182,30 @@ where oid in (select edge from tmp);
 
 -- enable routing onto branch
 select rn_split_edge(array[555063377], array[555116975]);
+
+-- no recorded stations on this route
+-- add stop at Baro Port
+
+-- insert node to enable link to be inserted
+insert into africa_osm_nodes (
+oid, railway, name, country, gauge, facility, geom)
+ values (
+ 558000010,
+ 'stop',
+ 'Baro Port',
+ 'Nigeria',
+ '',
+ '',
+ ST_SetSRID(ST_Point(6.41851,8.61206), 4326)
+ )
+;
+
+select rn_copy_node(array[558000010], array[555097769]);
+
+update africa_osm_nodes
+set gauge = '1067',
+facility = 'port'
+where oid = 559000010;
 
 -- Cape Gauge Western Line
 -- Lagos to Nguru
@@ -622,14 +630,14 @@ and country ='Nigeria' and railway in ('station', 'halt', 'stop');
 
 
 -- extract tables for Egypt (backup)
-create table nigeria_osm_edges as select * from africa_osm_edges where country like '%Nigeria%';
-create table nigeria_osm_nodes as select * from africa_osm_nodes where country like '%Nigeria%';
+create table nigeria_osm_edges as select * from africa_osm_edges where country = 'Nigeria';
+create table nigeria_osm_nodes as select * from africa_osm_nodes where country = 'Nigeria';
 
 -- test routing
 		SELECT X.*, a.line, a.status, a.gauge, b.railway, b.name FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where line is not null',
-               ,
-		,
+               555009645,
+		555016479,
 		false
 		) AS X left join
 		africa_osm_edges as a on a.oid = X.edge left join
