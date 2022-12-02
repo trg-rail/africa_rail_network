@@ -86,3 +86,13 @@ Progress:
   - [x] Open lines - passenger and freight
   - [x] Stations, ports and major freight destinations
   - [x] Disused lines
+- [ ] Eritrea, Ethiopia and Djibouti
+  - [x] Open lines - passenger and freight
+  - [x] Stations, ports and major freight destinations
+  - [x] Some disused lines
+  - [x] Some lines under construction
+- [ ] Democratic Republic of Congo
+  - [x] Open lines - passenger and freight
+  - [x] Stations, river ports and freight destinations (mainly mines)
+  - [x] Disused/Unknown status lines
+- [ ] Angola
