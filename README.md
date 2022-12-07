@@ -96,3 +96,6 @@ Progress:
   - [x] Stations, river ports and freight destinations (mainly mines)
   - [x] Disused/Unknown status lines
 - [ ] Angola
+  - [x] Open lines - passenger and freight
+  - [x] Stations, sea ports and freight destinations
+  - [x] Lines under construction (New Luanda airport spur)
