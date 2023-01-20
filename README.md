@@ -99,3 +99,7 @@ Progress:
   - [x] Open lines - passenger and freight
   - [x] Stations, sea ports and freight destinations
   - [x] Lines under construction (New Luanda airport spur)
+- [x] Namibia
+  - [ ] Open lines - passenger and freight
+  - [ ] Stations, sea ports and freight key destinations
+  - [ ] Disused line
