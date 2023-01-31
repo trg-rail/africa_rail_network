@@ -82,7 +82,7 @@ Progress:
   - [x] Congo-Ocean Railway (COR) and Bilinga – Dolisie  loop
   - [x] Mont Bélo - Mbinda branch (rehabilitation)
   - [ ] Proposed lines (defer)
-- [x] Sudan and South Sudan
+- [ ] Sudan and South Sudan
   - [x] Open lines - passenger and freight
   - [x] Stations, ports and major freight destinations
   - [x] Disused lines
@@ -99,7 +99,10 @@ Progress:
   - [x] Open lines - passenger and freight
   - [x] Stations, sea ports and freight destinations
   - [x] Lines under construction (New Luanda airport spur)
-- [x] Namibia
-  - [ ] Open lines - passenger and freight
-  - [ ] Stations, sea ports and freight key destinations
-  - [ ] Disused line
+- [ ] Namibia
+  - [x] Open lines - passenger and freight
+  - [x] Stations, sea ports and freight key destinations
+  - [x] Disused line
+- [ ] Botswana
+  - [x] Open lines - passenger and freight
+  - [x] Stations and key freight destinations
