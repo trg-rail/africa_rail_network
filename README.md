@@ -106,3 +106,7 @@ Progress:
 - [ ] Botswana
   - [x] Open lines - passenger and freight
   - [x] Stations and key freight destinations
+- [ ] Zimbabwe
+  - [x] Open lines - passenger and freight
+  - [x] Freight spurs for strategic facilities (including power stations, grain stores, fuel terminals etc.)
+  - [x] Mine-owned lines
