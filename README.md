@@ -110,3 +110,9 @@ Progress:
   - [x] Open lines - passenger and freight
   - [x] Freight spurs for strategic facilities (including power stations, grain stores, fuel terminals etc.)
   - [x] Mine-owned lines
+- [x] Mozambique
+  - [ ] Open Lines - passenger and freight
+  - [ ] Freight spurs for strategic facilities and ports
+- [x] Eswatini
+  - [ ] Open Lines (freight - no passenger services)
+  - [ ] Freight spurs for strategic facilities and dry port
