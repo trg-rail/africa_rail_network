@@ -322,7 +322,7 @@ SELECT X.* FROM pgr_dijkstra(
 		ORDER BY seq)
 update africa_osm_edges
 set line = 'Limpopo railway (Somabhula – Sango/Chicualacuala (Mozambique border))',
-mode = 'freight',
+mode = 'mixed',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
