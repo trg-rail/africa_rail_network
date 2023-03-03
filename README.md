@@ -116,3 +116,6 @@ Progress:
 - [x] Eswatini
   - [x] Open Lines (freight - no passenger services)
   - [x] Freight spurs for strategic facilities and dry port
+- [x] Malawi
+  - [x] Open Lines (freight and passenger services)
+  - [x] Freight spurs for strategic facilities, ports and dry ports
