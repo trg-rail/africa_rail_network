@@ -6,48 +6,48 @@ Progress:
 - [ ] Morocco
   - [x] Open and disused lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and freight destinations
-  - [ ] Tram/light rail (defer)
-  - [ ] Identify closed/missing stations (defer)
-  - [ ] Speed cost (defer)
-  - [ ] Abandoned lines (defer)
-  - [ ] Proposed lines (defer)
-  - [ ] Under Construction lines (defer)
+  - [ ] Tram/light rail
+  - [ ] Identify closed/missing stations
+  - [ ] Speed cost
+  - [ ] Abandoned lines
+  - [ ] Proposed lines
+  - [ ] Under Construction lines
 - [ ] Algeria - a complex network of existing lines, lines under construction or upgrade and planned lines. See [this map](/algeria/carte-rseau-ferr-national.jpg) from the infrastructure company Anesrif.
 
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
-  - [ ] Tram/light rail (defer)
-  - [ ] Identify closed/missing stations (defer)
-  - [ ] Speed cost (defer)
-  - [ ] Disused lines (defer)
-  - [ ] Abandoned lines (defer)
-  - [ ] Proposed lines (defer)
-  - [ ] Under Construction lines (defer)
+  - [ ] Tram/light rail
+  - [ ] Identify closed/missing stations
+  - [ ] Speed cost
+  - [ ] Disused lines
+  - [ ] Abandoned lines
+  - [ ] Proposed lines
+  - [ ] Under Construction lines
 - [ ] Tunisia
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
-  - [ ] Tram/light rail (defer)
-  - [ ] Identify closed/missing stations (defer)
-  - [ ] Speed cost (defer)
+  - [ ] Tram/light rail
+  - [ ] Identify closed/missing stations
+  - [ ] Speed cost
   - [x] Disused lines (some)
-  - [ ] Abandoned lines (defer)
-  - [ ] Proposed lines (defer)
-  - [ ] Under Construction lines (defer)
+  - [ ] Abandoned lines
+  - [ ] Proposed lines
+  - [ ] Under Construction lines
 - [ ] Libya - not thought to be any operational lines in Libya currently. Some construction has taken place for a proposed line parallel to the coast that would form part of a North African link between Tunisia and Egypt. 
-  - [ ] Under construction (defer)
+  - [ ] Under construction
 - [ ] Egypt
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
-  - [ ] Subway/Tram/light rail (defer)
-  - [ ] Identify closed/missing stations (defer)
-  - [ ] Speed cost (defer)
+  - [ ] Subway/Tram/light rail
+  - [ ] Identify closed/missing stations
+  - [ ] Speed cost
   - [x] Disused lines (some)
-  - [ ] Abandoned lines (defer)
-  - [ ] Proposed lines (defer)
-  - [ ] Under Construction lines (defer)
+  - [ ] Abandoned lines
+  - [ ] Proposed lines
+  - [ ] Under Construction lines
 - [ ] West Africa (excluding Nigeria) - Mauritania, Senegal, Mali, Guinea, Sierra Leone, Liberia, Burkina Faso, Côte d'Ivoire, Ghana, Togo, Benin, Niger
   - [x] Mauritania (single line)
   - [x] Senegal - new standard gauge and metre gauge (open/rehabilitation/disused)
@@ -64,58 +64,71 @@ Progress:
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Subway/Tram/light rail
-  - [ ] Identify closed/missing stations (defer)
-  - [ ] Speed cost (defer)
+  - [ ] Identify closed/missing stations
+  - [ ] Speed cost
   - [x] Disused lines (some)
-  - [ ] Abandoned lines (defer)
-  - [ ] Proposed lines (defer)
+  - [ ] Abandoned lines
+  - [ ] Proposed lines
   - [x] Under Construction lines (some)
 - [ ] Cameroon
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Disused lines
-  - [ ] Proposed lines (defer)
+  - [ ] Proposed lines
+  - [ ] Speed cost
 - [ ] Gabon
   - [x] Single route - Trans-Gabon Railway
-  - [ ] Proposed lines (defer)
+  - [ ] Proposed lines
+  - [ ] Speed cost
 - [ ] Congo-Brazzaville (Republic of Congo)
   - [x] Congo-Ocean Railway (COR) and Bilinga – Dolisie  loop
   - [x] Mont Bélo - Mbinda branch (rehabilitation)
-  - [ ] Proposed lines (defer)
+  - [ ] Proposed lines
+  - [ ] Speed cost
 - [ ] Sudan and South Sudan
   - [x] Open lines - passenger and freight
   - [x] Stations, ports and major freight destinations
   - [x] Disused lines
+  - [ ] Speed cost
 - [ ] Eritrea, Ethiopia and Djibouti
   - [x] Open lines - passenger and freight
   - [x] Stations, ports and major freight destinations
   - [x] Some disused lines
   - [x] Some lines under construction
+  - [ ] Speed cost
 - [ ] Democratic Republic of Congo
   - [x] Open lines - passenger and freight
   - [x] Stations, river ports and freight destinations (mainly mines)
   - [x] Disused/Unknown status lines
+  - [ ] Speed cost
 - [ ] Angola
   - [x] Open lines - passenger and freight
   - [x] Stations, sea ports and freight destinations
   - [x] Lines under construction (New Luanda airport spur)
+  - [ ] Speed cost
 - [ ] Namibia
   - [x] Open lines - passenger and freight
   - [x] Stations, sea ports and freight key destinations
   - [x] Disused line
+  - [ ] Speed cost
 - [ ] Botswana
   - [x] Open lines - passenger and freight
   - [x] Stations and key freight destinations
+  - [ ] Speed cost
 - [ ] Zimbabwe
   - [x] Open lines - passenger and freight
   - [x] Freight spurs for strategic facilities (including power stations, grain stores, fuel terminals etc.)
   - [x] Mine-owned lines
-- [x] Mozambique
+  - [ ] Speed cost
+- [] Mozambique
   - [x] Open Lines - passenger and freight
   - [x] Freight spurs for strategic facilities and ports
-- [x] Eswatini
+  - [ ] Speed cost
+- [] Eswatini
   - [x] Open Lines (freight - no passenger services)
   - [x] Freight spurs for strategic facilities and dry port
-- [x] Malawi
+  - [ ] Speed cost
+- [] Malawi
   - [x] Open Lines (freight and passenger services)
   - [x] Freight spurs for strategic facilities, ports and dry ports
+  - [ ] Speed cost
