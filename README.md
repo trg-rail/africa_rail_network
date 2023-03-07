@@ -7,7 +7,6 @@ Progress:
   - [x] Open and disused lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and freight destinations
   - [ ] Tram/light rail
-  - [ ] Identify closed/missing stations
   - [ ] Speed cost
   - [ ] Abandoned lines
   - [ ] Proposed lines
@@ -18,7 +17,6 @@ Progress:
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
   - [ ] Tram/light rail
-  - [ ] Identify closed/missing stations
   - [ ] Speed cost
   - [ ] Disused lines
   - [ ] Abandoned lines
@@ -29,7 +27,6 @@ Progress:
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
   - [ ] Tram/light rail
-  - [ ] Identify closed/missing stations
   - [ ] Speed cost
   - [x] Disused lines (some)
   - [ ] Abandoned lines
@@ -42,7 +39,6 @@ Progress:
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
   - [ ] Subway/Tram/light rail
-  - [ ] Identify closed/missing stations
   - [ ] Speed cost
   - [x] Disused lines (some)
   - [ ] Abandoned lines
@@ -60,6 +56,7 @@ Progress:
   - [x] Togo - several lines that are freight only currently (1067mm and 1000mm).
   - [x] Benin - single 1000mm line in use for freight only.
   - [x] Niger - 1000mm line between Niamey-Dosso built 2014-16 intended to connect into Benin network. Project stalled and this is disused (services have never run).
+  - [ ] Speed cost
 - [ ] Nigeria
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
