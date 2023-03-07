@@ -53,7 +53,6 @@ Progress:
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Subway/Tram/light rail
-  - [ ] Identify closed/missing stations
   - [ ] Speed cost
   - [x] Disused lines (some)
   - [x] Under Construction lines (some)
