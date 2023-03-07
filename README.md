@@ -129,3 +129,6 @@ Progress:
   - [x] Open Lines (freight and passenger services)
   - [x] Freight spurs for strategic facilities, ports and dry ports
   - [ ] Speed cost
+- [ ] South Africa
+  - [ ] Strategic freight lines (Transnet)
+  - [ ] Metrorail (passenger routes where not shared with Transnet) 
