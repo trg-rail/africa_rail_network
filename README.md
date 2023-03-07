@@ -3,6 +3,7 @@
 Progress:
 
 - [x] Prepare database tables
+- [ ] Integrate East Africa network from HVT project
 - [ ] Morocco
   - [x] Open and disused lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and freight destinations
