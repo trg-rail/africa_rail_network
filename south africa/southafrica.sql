@@ -1961,22 +1961,353 @@ where oid in (select edge from tmp);
 
 -- Gqeberha (Port Elizabeth) - Kariega (Uitenhage)
 
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555048152,
+		555007705,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Gqeberha (Port Elizabeth) - Kariega (Uitenhage)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Metrorail Eastern Cape passenger line. Passenger services are currently suspended due to vandelisim and theft. See: https://bit.ly/3lafchP. Also Transnet branch line'
+where oid in (select edge from tmp);
+
+-- Port Elizabeth
+
+-- access route
+-- simplify routing
+select rn_insert_edge(555121792, 555141342, 556000101);
+
+-- split 555003428 at 555141342
+select rn_split_edge(array[555003428], array[555141342]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where oid != 555107721',
+            555121792,
+		555036890,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Elizabeth (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- container terminal
+
+update africa_osm_nodes
+set name = 'Port Elizabeth (container terminal)',
+facility = 'container terminal',
+railway = 'stop'
+where oid = 555002979;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555011984,
+		555002979,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Elizabeth (container terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- MPT Quay - General Cargo
+update africa_osm_nodes
+set name = 'Port Elizabeth (MPT quay - General Cargo)',
+facility = 'port',
+railway = 'stop'
+where oid = 555116337;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555003520,
+		555116337,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Elizabeth (MPT quay - General Cargo)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- Bulk Terminal
+update africa_osm_nodes
+set name = 'Port Elizabeth (Bulk Terminal)',
+facility = 'port',
+railway = 'stop'
+where oid = 555141217;
+
+select rn_split_edge(array[555091550], array[555141217]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555003520,
+		555141217,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Elizabeth (Bulk Terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- Fuel storage Terminal
+update africa_osm_nodes
+set name = 'Port Elizabeth (fuel storage terminal)',
+facility = 'port',
+railway = 'stop'
+where oid = 555122592;
+
+-- split 555003392 at 555122590
+select rn_split_edge(array[555003392], array[555122590]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555036890,
+		555122592,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Elizabeth (Fuel storage Terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- PPC Cement Works
+update africa_osm_nodes
+set name = 'PPC Cement Works',
+facility = 'manufacturing',
+railway = 'stop'
+where oid = 555011829;
+
+-- simplify
+select rn_insert_edge(555052009, 555121792, 556000103);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555121792,
+		555011829,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'PPC Cement Works',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Avontuur Branch Line (Apple Express)
+-- from Humewood Road - Avontuur (and spur to Patensie)
+-- rehabilitation
+-- 610mm gauge
+-- primarily tourist trains APple Express - ceased in 2010.
+-- see: https://www.appleexpresstrain.co.za
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555059498,
+		555001941,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Avontuur Branch Line (Apple Express)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '610',
+status = 'disused',
+comment = 'Was used by the tourist train "Apple Express" and some freight services. Apple Express ceased in 2010 and freight services in 2011. Apple Express understood to be undertaking rehabilitation to Baywest Mall, see: https://www.appleexpresstrain.co.za and https://www.youtube.com/watch?v=9-DjjapeomU'
+where oid in (select edge from tmp);
+
+-- Patensie spur
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555063976,
+		555000207,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Avontuur Branch Line (Apple Express)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '610',
+status = 'disused',
+comment = 'Was used by the tourist train "Apple Express" and some freight services. Apple Express ceased in 2010 and freight services in 2011. Apple Express understood to be undertaking rehabilitation to Baywest Mall, see: https://www.appleexpresstrain.co.za and https://www.youtube.com/watch?v=9-DjjapeomU'
+where oid in (select edge from tmp);
+
+-- section to Baywest mall
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555059498,
+		555063255,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Avontuur Branch Line (Apple Express)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '610',
+status = 'rehabilitation',
+comment = 'Was used by the tourist train "Apple Express" and some freight services. Apple Express ceased in 2010 and freight services in 2011. Apple Express understood to be undertaking rehabilitation to Baywest Mall, see: https://www.appleexpresstrain.co.za and https://www.youtube.com/watch?v=9-DjjapeomU'
+where oid in (select edge from tmp);
 
 
--- Klipplaat - Port Elizabeth (Gqeberha)
+-- Klipplaat - Uitenhage
 -- Transnet branch line
-
 
   with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
             555000832,
-		,
+		555007705,
 		false
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Klipplaat - Port Elizabeth',
+set line = 'Klipplaat - Uitenhage (and Port Elizabeth)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line (and on to Port Elizabeth/Gqeberha)'
+where oid in (select edge from tmp);
+
+
+-- Klipplaat - Rosmead
+-- Disused according to Transnet 2021 Annual Report map
+
+--split 555027056 at 555094762
+select rn_split_edge(array[555027056], array[555094762]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555000832,
+		555094762,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Klipplaat - Rosmead',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Disused according to Transnet 2021 Annual Report map'
+where oid in (select edge from tmp);
+
+select distinct facility from africa_osm_nodes
+update africa_osm_nodes
+set gauge = '1067'
+where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1067'))
+and country in ('South Africa') and railway in ('station', 'halt', 'stop');
+
+
+-- De Aar - Kimberley
+
+-- copy Kimberley station
+select rn_copy_node(array[555063120], array[555101781]);
+
+update africa_osm_nodes
+set name = 'Kimberley'
+where oid = 556063120;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555001114,
+		556063120,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'De Aar - Kimberley',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Naroegas (Nambiba border) - De Aar
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            559000016,
+		555000243,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Naroegas (Nambiba border) - De Aar',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Upington - Kakamas
+--  Transnet branch line
+
+-- split 555034558 at 555068625
+select rn_split_edge(array[555034558], arary[555068625]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555068625,
+		555006504,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Upington - Kakamas',
 mode = 'freight',
 type = 'conventional',
 gauge = '1067',
@@ -1985,12 +2316,263 @@ comment = 'Transnet branch line'
 where oid in (select edge from tmp);
 
 
-select distinct facility from africa_osm_nodes
-update africa_osm_nodes
-set gauge = '1067'
-where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1067'))
-and country in ('South Africa') and railway in ('station', 'halt', 'stop');
+-- De Aar - Port of Ngqura
 
+update africa_osm_nodes
+set name ='Port of Ngqura (container terminal)',
+facility = 'container terminal',
+railway = 'stop'
+where oid = 555015569;
+
+-- split 555015616 at 555141657
+select rn_split_edge(array[555015616], array[555141657]);
+-- split 555115329 at 555074156
+select rn_split_edge(array[555115329], array[555074156]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555071366,
+		555015569,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'De Aar - Port of Ngqura',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Department of Defense Ammunition Depot (De Aar)
+update africa_osm_nodes
+set name = 'Department of Defense Ammunition Depot (De Aar)',
+railway = 'stop',
+facility = 'military'
+where oid = 555009118;
+
+-- split 555000845 at 555069498
+select rn_split_edge(array[555000845], array[555069498]);
+-- split 555021719 at 555069499
+select rn_split_edge(array[555021719], array[555069499]);
+
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555069498,
+		555009118,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Department of Defense Ammunition Depot (De Aar)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Belmont - Douglas
+-- Transnet branch line
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555048922,
+		555008595,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Belmont - Douglas',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet Branch line'
+where oid in (select edge from tmp);
+
+-- GWK grain storage silos, Douglas
+
+update africa_osm_nodes
+set name = 'GWK grain storage silos, Douglas',
+railway = 'stop',
+facility = 'food storage'
+where oid = 555071632;
+
+-- split 555119680 at 555071631
+select rn_split_edge(array[555119680], array[555071631]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555071631,
+		555071632,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'GWK grain storage silos, Douglas',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- East London metrorail
+-- East London - Chiselhurst
+-- Passenger only
+
+update africa_osm_nodes
+set railway = 'station'
+where oid = 555000918;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555000918,
+		555061722,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'East London - Chiselhurst (Metrorail)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Metrorail Eastern Cape passenger line. Passenger services are currently suspended due to vandelisim and theft. See: https://bit.ly/3lafchP.'
+where oid in (select edge from tmp);
+
+-- Chiselhurst - Berlin (Ntabozuko)
+-- Metrorail and Transnet
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555061722,
+		555061736,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Chiselhurst - Berlin/Ntabozuko (Metrorail and Transnet)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Metrorail Eastern Cape passenger line. Passenger services are currently suspended due to vandelisim and theft. See: https://bit.ly/3lafchP. Also Transnet core network'
+where oid in (select edge from tmp);
+
+-- Port of East London
+
+-- Container Terminal
+
+update africa_osm_nodes
+set name = 'Port of East London (container terminal)',
+railway = 'stop',
+facility = 'container terminal'
+where oid = 555039836;
+
+-- Vehicle Terminal
+update africa_osm_nodes
+set name = 'Port of East London (vehicle terminal)',
+railway = 'stop',
+facility = 'port'
+where oid = 555006428;
+
+-- Grain Terminal (Elevator/storage silos)
+update africa_osm_nodes
+set name = 'Port of East London (grain terminal)',
+railway = 'stop',
+facility = 'port',
+comment = 'grain elevator and storage silos'
+where oid = 555126640;
+
+-- Fuel storage
+update africa_osm_nodes
+set name = 'Port of East London (fuel storage terminal)',
+railway = 'stop',
+facility = 'port',
+comment = ''
+where oid = 555126737;
+
+-- Port access
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555002326,
+		555039651,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of East London (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Container terminal
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555039818,
+		555039836,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of East London (container terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Fuel storage terminal
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555039651,
+		555126737,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of East London (fuel storage terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- grain elevator and storage silos
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where oid != 555096494',
+            555039651,
+		555126640,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of East London (grain terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
 
 
 -- extract tables (backup)
