@@ -3509,6 +3509,313 @@ status = 'open',
 comment = 'Transnet core network.'
 where oid in (select edge from tmp);
 
+-- Arlington - Marquard
+-- Transnet branch line
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555006686,
+		555000541,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Arlington - Marquard',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Arlington - Heilbron
+
+-- simplify
+select rn_insert_edge(555000407, 555059369, 556000110);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555000407,
+		555000499,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Arlington - Heilbron',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Bethlehem - Balfour North
+-- This line is open according to Transnet 2021 report map
+-- but OSM has it abandoned or disused in parts
+-- Transnet branch line
+
+update africa_osm_nodes set railway = 'stop' where oid = 555000463;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555006734,
+		555000463,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Bethlehem - Frankfort',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. This line is open according to Transnet 2021 report map. OSM has it disused or abandoned between Frankfort and Grootvlei'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555000463,
+		555106605,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Frankfort - Grootvlei',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'unclear',
+comment = 'Transnet branch line. This line is open according to Transnet 2021 report map. OSM has it disused or abandoned between Frankfort and Grootvlei'
+where oid in (select edge from tmp);
+
+-- Grootvlei - Balfour North
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555106605,
+		555065384,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Grootvlei - Balfour North',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. This line is open according to Transnet 2021 report map. OSM has it abandoned or disused between Grootvlei and Redan'
+where oid in (select edge from tmp);
+
+-- Grootvlei - Redan
+
+-- split 555017406 at 555063684
+select rn_split_edge(array[555017406], array[555063684]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555106605,
+		555063684,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Grootvlei - Redan',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'unclear',
+comment = 'Transnet branch line. This line is open according to Transnet 2021 report map. OSM has it abandoned or disused.'
+where oid in (select edge from tmp);
+
+-- Union - Danskraal
+-- Transnet core network
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555003066, 555003067, 555105353)',
+            555051755,
+		555126906,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Union - Danskraal',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Danskraal - Pietermaritzburg
+
+select rn_copy_node(array[555030022], array[555044147]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555126906,
+		556030022,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Danskraal - Pietermaritzburg',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Pietermaritzburg - Cato Ridge
+
+update africa_osm_nodes
+set railway = 'staion' where oid = 555002388;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            556030022,
+		555004004,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pietermaritzburg - Cato Ridge',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Cato Ridge - Pinetown
+-- Old main line
+update africa_osm_nodes set railway = 'station' where oid = 555080439;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555004004,
+		555032667,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Cato Ridge - Pinetown (old main line)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Old main line in/out Durban'
+where oid in (select edge from tmp);
+
+-- Durban Metrorail
+
+-- Pinetown - Rossburgh (Old Main Line)
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555002388,
+		555032667,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pinetown - Rossburgh (Old Main Line)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Old Main Line).'
+where oid in (select edge from tmp);
+
+-- Rossborough access
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555032667,
+		555005735,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rossburgh (Old and New Main Lines)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Old and New Main Lines).'
+where oid in (select edge from tmp);
+
+-- Cato Ridge - Rossburgh (New Main Line)
+
+-- simplify lines into Rossburgh
+select rn_insert_edge(555005735, 555003755, 556000111);
+delete from africa_osm_edges where oid = 556000111
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555047484, 555005688)',
+            555003989,
+		555005735,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Cato Ridge - Rossburgh (New Main Line)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (New Main Line). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Merebank - Rossburgh
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555061613,
+		555005735,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Merebank - Rossburgh',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Chatsworth/Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Rossburgh access
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555005735,
+		555061584,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rossburgh (access)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail and Transnet core network.'
+where oid in (select edge from tmp);
 
 -- stations
 -- Kamfersdam
