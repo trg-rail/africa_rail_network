@@ -2057,7 +2057,8 @@ where oid in (select edge from tmp);
 update africa_osm_nodes
 set name = 'Port Elizabeth (Bulk Terminal)',
 facility = 'port',
-railway = 'stop'
+railway = 'stop',
+comment = 'Terminal is used for managanese export and includes manganese storage area'
 where oid = 555141217;
 
 select rn_split_edge(array[555091550], array[555141217]);
@@ -2574,6 +2575,949 @@ status = 'open',
 comment = 'Transnet core network'
 where oid in (select edge from tmp);
 
+-- Berlin - Queenstown/Komani
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555061736,
+		555001002,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Berlin - Queenstown/Komani',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Queenstown - Springfontein
+-- Transnet core network
+-- Also shared by Shosholoza Meyl Johannesburg – Queenstown (Komani) long distance passenger service.  
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555001002,
+		555061540,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Queenstown - Springfontein',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Also shared by Shosholoza Meyl Johannesburg – Queenstown (Komani) long distance passenger service.'
+where oid in (select edge from tmp);
+
+-- Springfontein - Bloemfontein
+update africa_osm_nodes
+set railway = 'station' where oid = 555000425;
+
+-- split 555036534 at 555145904
+select rn_split_edge(array[555036534], array[555145904]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555061540,
+		555000425,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sringfontein - Bloemfontein',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Also shared by Shosholoza Meyl Johannesburg – Queenstown (Komani) long distance passenger service.'
+where oid in (select edge from tmp);
+
+
+-- Springfontein - Noupoort
+
+-- split 555121692 at 555153626
+select rn_split_edge(array[555121692], array[555153626]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555145903,
+		555069313,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Springfontein - Noupoort',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+--  Amabele - Mthatha
+-- Transnet branch line
+
+-- adjust incorrect edge
+select rn_change_source(555011384, 555075086);
+-- simplify
+select rn_insert_edge(555000656, 555075086, 556000104);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555000656,
+		555010015,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Amabele - Mthatha',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Blaney - Cookhouse
+-- Transnet core network
+
+-- split 555017328 at 555065281
+select rn_split_edge(array[555017328], array[555065281]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555055740,
+		555065281,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Blaney - Cookhouse',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Addo - Kirkwood
+-- Transnet branch line
+
+-- split 555017431 at 555063694
+select rn_split_edge(array[555017431], array[555063694]);
+
+
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555000829,
+		555063694,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Addo - Kirkwood',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- sunday rivers citrus company
+-- largest grower, packer and exporter of South African citrus
+-- see: https://www.srcc.co.za/about-srcc
+
+update africa_osm_nodes
+set name = 'Sunday Rivers Citrus Company',
+railway = 'stop',
+facility = 'food',
+comment = 'Largest grower, packer and exporter of South African citrus. see: https://www.srcc.co.za/about-srcc'
+where oid = 555003558;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555000829,
+		555003558,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sunday Rivers Citrus Company',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Hotazel - Hamilton (Bloemfontein)
+
+-- simplify
+select rn_insert_edge(555081809, 555000476, 556000105);
+
+--split 555012158 at 555001164
+select rn_split_edge(array[555012158], array[555001164]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555001164,
+		555000476,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hotazel - Hamilton (Bloemfontein)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Hotazel area mines etc
+
+-- split 555057632 at 555084343
+select rn_split_edge(array[555057632], array[555084343]);
+-- split 555039495 at 555084341
+select rn_split_edge(array[555039495], array[555084341]);
+-- split 5550394952 at 555106472
+select rn_split_edge(array[5550394952], array[555106472]);
+
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555001164,
+		555084341,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hotazel Manganese Mines (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- Black Rock Mine (Manganese)
+update africa_osm_nodes
+set name = 'Black Rock Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-3065.html'
+where oid = 555084342;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555084341,
+		555084342,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Black Rock Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Wessels Mine (Manganese)
+update africa_osm_nodes
+set name = 'Wessels Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-3071.html'
+where oid = 555028636;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555084341 ,
+		555028636,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Wessels Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Nchwaning Mines (Manganese)
+update africa_osm_nodes
+set name = 'Nchwaning Mines',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mines. See: https://www.mindat.org/loc-55925.html'
+where oid = 555106473;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+           555106472 ,
+		555106473,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Nchwaning Mines',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Gloria Mine
+update africa_osm_nodes
+set name = 'Gloria Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-11382.html'
+where oid = 555106477;
+
+--split 55503949522 at 555106476
+select rn_split_edge(array[55503949522], array[555106476]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555106476,
+		555106477,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Gloria Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Hotazel Mine (Manganese)
+update africa_osm_nodes
+set name = 'Hotazel Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-2413.html'
+where oid = 555097200;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555084343,
+		555097200,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hotazel Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Kalagadi Mine (Manganese)
+
+-- split 555070550 at 555107706
+-- split 555070528 at 555106475
+select rn_split_edge(array[555070550,555070528], array[555107706,555106475]);
+-- split 5550121581 at 555106342
+select rn_split_edge(array[5550121581], array[555106342]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555106342,
+		555107706,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hotazel Manganese mines (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+update africa_osm_nodes
+set name = 'Kalagadi Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-252416.html'
+where oid = 555106474;
+
+-- split 5550705282 at 555106312
+select rn_split_edge(array[5550705282], array[555106312]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555107706,
+		555106474,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kalagadi Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Kudumane Mine (Manganese)
+update africa_osm_nodes
+set name = 'Kudumane Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-252417.html'
+where oid = 555106338;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555107706,
+		555106338,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kudumane Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- split 555012167 at 555106310
+select rn_split_edge(array[555012167], array[555106310]);
+-- split 555070525 at 555106309
+select rn_split_edge(array[555070525], array[555106309]);
+-- split 555070527 at 555106311
+select rn_split_edge(array[555070527], array[555106311]);
+--- spit 5550705272 at 555106311
+select rn_split_edge(array[5550705272], array[555106311]);
+-- split 55507052721 at 555106305
+select rn_split_edge(array[55507052721], array[555106305]);
+
+
+-- Tshipi Borwa Mine
+update africa_osm_nodes
+set name = 'Tshipi Borwa Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-252415.html'
+where oid = 555106305;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555106310,
+		555106305,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tshipi Borwa Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Mamatwan Mine
+update africa_osm_nodes
+set name = 'Mamatwan Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Manganese mine. See: https://www.mindat.org/loc-11063.html'
+where oid = 555023661;
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555106309,
+		555023661,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Mamatwan Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Bloemfontein - Maseru (Lesotho)
+-- Transnet core network
+
+
+insert into africa_osm_nodes (
+oid, railway, name, country, gauge, facility, geom)
+ values (
+ 558000102,
+ null,
+ null,
+ 'South Africa',
+ null,
+ null,
+ ST_SetSRID(ST_Point(26.22830,-29.12395), 4326)
+ )
+;
+
+select rn_copy_node(array[558000102], array[555024074]);
+-- 559000102
+select rn_insert_edge(555060297, 559000102, 556000106);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555006239,
+		555007933,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Bloemfontein - Maseru (Lesotho)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+
+-- Marselilles/Ladybrand - Bethlehem
+-- disused according to Transnet 2021 Report map
+
+-- split 555001013 at 555065429
+select rn_split_edge(array[555001013], array[555065429]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555070604,
+		555065429,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Marselilles/Ladybrand - Bethlehem',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'disused according to Transnet 2021 Report map'
+where oid in (select edge from tmp);
+
+-- split 555037459 at 555106135
+select rn_split_edge(array[555037459], array[555106135]);
+-- split 555004742 at 555000525
+select rn_split_edge(array[555004742], array[555000525]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges',
+            555106135,
+		555000525,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Marselilles/Ladybrand - Bethlehem',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'disused according to Transnet 2021 Report map'
+where oid in (select edge from tmp);
+
+-- Ramatlabama (Botswana border) - Kamfersdam
+
+-- split 555017290 at 555153564
+select rn_split_edge(array[555017290], array[555153564]);
+-- split 555004578 at 555120647
+select rn_split_edge(array[555004578], array[555120647]);
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where oid not in  (555132862, 555025206) and country = ''South Africa'' ',
+            555081222,
+		555006583,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ramatlabama (Botswana border) - Kamfersdam',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Veertien Strome - Klerksdorp
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555060701,
+		555001694,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Veertien Strome - Klerksdorp',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Bloemfontein - Vereeniging
+-- Transnet core network
+-- Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani 
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555000425,
+		555048499,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Bloemfontein - Vereeniging',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Also Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani'
+where oid in (select edge from tmp);
+
+-- Klerksdorp - Houtheuwel
+-- Transnet core network
+
+update africa_osm_nodes
+set railway = 'station' where oid = 555001694;
+
+update africa_osm_nodes
+set railway = null, name = null where oid = 555050291;
+
+
+  with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555000786 ',
+            555001694,
+		555000371,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Klerksdorp - Houtheuwel',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Cachet - Oberholzer
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555002320,
+		555001762,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Cachet - Oberholzer',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Welverdiend - Lichtenburg
+
+--split 555027226 at 555068321
+select rn_split_edge(array[555027226], array[555068321]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555068321,
+		555001705,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Welverdiend - Lichtenburg',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Coligny - Pudimoe
+-- Transnet branch line
+
+-- split 555082843 at 555081255
+select rn_split_edge(array[555082843], array[555081255]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555068328,
+		555081255,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Coligny - Pudimoe',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Vermaas - Makwassie
+-- Transnet branch line
+
+-- split 555052776 at 555091598
+select rn_split_edge(array[555052776], array[555091598]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555091598,
+		555068472,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vermaas - Makwassie',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Ottosdal - Klerksdorp
+-- Transnet branch line
+
+-- split 555014485 at 555070036
+select rn_split_edge(array[555014485], array[555070036]);
+-- split 555000784 at 555102363
+select rn_split_edge(array[555000784], array[555102363]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555070036,
+		555102363,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ottosdal - Klerksdorp',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Orkney - Westleigh
+-- Transnet branch line
+
+-- split 555045051 at 555080021
+select rn_split_edge(array[555045051], array[555080021]);
+-- split 5550450512 at 555080223
+select rn_split_edge(array[5550450512], array[555080223]);
+
+-- copy Westleigh station
+select rn_copy_node(array[555000646], array[555129701]);
+
+-- simplify join 555044855 to 555000646
+select rn_insert_edge(555044855, 556000646, 556000107);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555080021,
+		556000646,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Orkney - Westleigh',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Vierfontein - Bultfontein
+-- Transnet branch line
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555071246,
+		555001551,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vierfontein - Bultfontein',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Ancona - Whites
+-- Transnet branch line
+
+-- copy Whites
+select rn_copy_node(array[555000630], array[555130350]);
+-- simplify
+select rn_insert_edge(556000630, 555059476, 556000108);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555065076,
+		556000630,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ancona - Whites',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+--  Mafikeng- Krugersdorp
+-- Transnet Core Network
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555120647,
+		555059033,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Mafikeng- Krugersdorp',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Randfontein - Bank
+-- Transnet branch line
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555001468,
+		555006317,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Randfontein - Bank',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Kroonstad (Gunhill) - Danskraal
+
+-- simplify
+select rn_insert_edge(555023458, 555061536, 556000109);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555061536,
+		555126906,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kroonstad (Gunhill) - Danskraal',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+
+-- stations
+-- Kamfersdam
+select rn_copy_node(array[555003293], array[555117744]);
+-- Veertien Strome
+update africa_osm_nodes
+set name = 'Veertien Strome',
+railway = 'station'
+where oid = 555071362;
 
 -- extract tables (backup)
 create table southafrica_osm_edges as select * from africa_osm_edges where country in ('South Africa');
