@@ -3784,7 +3784,7 @@ where oid in (select edge from tmp);
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
-            555061613,
+            555067650,
 		555005735,
 		false
 		) AS X
@@ -3815,6 +3815,243 @@ type = 'conventional',
 gauge = '1067',
 status = 'open',
 comment = 'Durban Metrorail and Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Chatsworth Line
+-- Merebank - Crossmoor
+
+-- split 555081672 at 555147693
+select rn_split_edge(array[555081672], array[555147693]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555067650,
+		555061658,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Merebank - Crossmoor (Chatsworth Line)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail.'
+where oid in (select edge from tmp);
+
+-- Merebank - Reunion
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555067650,
+		555003890,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Merebank - Reunion',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Reunion - Umlazi (kwaMashu - Umlazi Line)
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555003890,
+		555049891,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Reunion - Umlazi (kwaMashu - Umlazi / Bluff Lines)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail'
+where oid in (select edge from tmp);
+
+-- Reunion - Kelso
+-- Southern Coast Line
+
+update africa_osm_nodes
+set railway = 'station' where oid = 555007056;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555003890,
+		555007056,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Reunion - Kelso',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Southern Coast Line). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Kelso - Port Shepstone
+-- Transnet core network
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555007056,
+		555012004,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kelso - Port Shepstone',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Port Shepstone - Harding
+-- status unclear. Transnet 2021 Report map shows entire branch as closed
+-- OSM has open to Paddock then abandoned.
+
+-- Port Shepstone - Paddock
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555012004,
+		555030852,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port Shepstone - Paddock',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'unclear',
+comment = 'Transnet 2021 Report map shows entire branch to Harding as closed OSM has open to Paddock then abandoned.'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555030852,
+		555141652,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Paddock - Harding',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Transnet 2021 Report map shows entire branch to Harding as closed OSM has open to Paddock then abandoned.'
+where oid in (select edge from tmp);
+
+-- Bluff Line
+-- Clairwood - Wests
+-- mixed - some sharing with port freight
+
+-- split 555005700 at 555080500
+select rn_split_edge(array[555005700], array[555080500]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555005065, 555005264, 555005274)',
+            555080500,
+		555004998,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Clairwood - Wests',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Bluff Line). Transnet core network (Port of Durban).'
+where oid in (select edge from tmp);
+
+-- correct Rossburgh issue
+update africa_osm_edges
+set line = null,
+gauge = null
+where oid in (555019459, 555006257,555124903,555005556,555124898, 555006253, 555019448, 555019449,555019530,555019491,555019460, 555006265);
+
+-- Rossburgh - Durban
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555061584,
+		555003679,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rossburgh - Durban',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (New Main/Old Main/Chatsworth/Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Durban - Umgeni
+-- Northern Coast / kwaMashu-Umlazi Lines
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555003679,
+		555003618,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Durban - Umgeni',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (kwaMashu-Umlazi/Northern Coast lines). Also Transnet core network.'
+where oid in (select edge from tmp);
+
+-- Umgeni - Duff's Road
+-- via Red Hill
+-- Northern Coast Line
+
+update africa_osm_nodes
+set railway = 'station' where oid = 555004614;
+
+-- simplify into Duff's Road
+select rn_insert_edge(555003601, 555004614, 556000112);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555033232,555033274)',
+            555003618,
+		555004614,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Umgeni - Duff''s Road (via Red Hill)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Northern Coast line).'
 where oid in (select edge from tmp);
 
 -- stations
