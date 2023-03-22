@@ -3795,7 +3795,7 @@ mode = 'mixed',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
-comment = 'Durban Metrorail (Chatsworth/Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+comment = 'Durban Metrorail (Chatsworth/Southern Coast/kwaMashu/Bluff lines). Also Transnet core network.'
 where oid in (select edge from tmp);
 
 -- Rossburgh access
@@ -3855,7 +3855,7 @@ mode = 'mixed',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
-comment = 'Durban Metrorail (Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+comment = 'Durban Metrorail (Southern Coast/kwaMashu/Bluff lines). Also Transnet core network.'
 where oid in (select edge from tmp);
 
 -- Reunion - Umlazi (kwaMashu - Umlazi Line)
@@ -3869,7 +3869,7 @@ SELECT X.* FROM pgr_dijkstra(
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Reunion - Umlazi (kwaMashu - Umlazi / Bluff Lines)',
+set line = 'Reunion - Umlazi (kwaMashu / Bluff Lines)',
 mode = 'passenger',
 type = 'conventional',
 gauge = '1067',
@@ -4005,11 +4005,11 @@ mode = 'mixed',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
-comment = 'Durban Metrorail (New Main/Old Main/Chatsworth/Southern Coast/kwaMashu-Umlazi/Bluff lines). Also Transnet core network.'
+comment = 'Durban Metrorail (New Main/Old Main/Chatsworth/Southern Coast/kwaMashu/Bluff lines). Also Transnet core network.'
 where oid in (select edge from tmp);
 
 -- Durban - Umgeni
--- Northern Coast / kwaMashu-Umlazi Lines
+-- Northern Coast / kwaMashu Lines
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
@@ -4024,7 +4024,7 @@ mode = 'mixed',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
-comment = 'Durban Metrorail (kwaMashu-Umlazi/Northern Coast lines). Also Transnet core network.'
+comment = 'Durban Metrorail (kwaMashu/Northern Coast lines). Also Transnet core network.'
 where oid in (select edge from tmp);
 
 -- Umgeni - Duff's Road
@@ -4047,11 +4047,246 @@ SELECT X.* FROM pgr_dijkstra(
 		ORDER BY seq)
 update africa_osm_edges
 set line = 'Umgeni - Duff''s Road (via Red Hill)',
-mode = 'mixed',
+mode = 'passenger',
 type = 'conventional',
 gauge = '1067',
 status = 'open',
 comment = 'Durban Metrorail (Northern Coast line).'
+where oid in (select edge from tmp);
+
+-- Umgeni - Duff's Road
+-- via Effingham
+-- Northern Coast /  kwaMashu Lines
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555003618,
+		555004614,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Umgeni - Duff''s Road (via Effingham)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Northern Coast / kwaMashu Lines). Also Transnet core network'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555004614,
+		555057703,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Umgeni - Duff''s Road',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Northern Coast / kwaMashu Lines). Also Transnet core network'
+where oid in (select edge from tmp);
+
+-- kwaMashu Line
+-- kwaMashu
+-- passenger
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555004608,
+		555061657,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Duff''s Road - kwaMashu (kwaMashu Line)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail.'
+where oid in (select edge from tmp);
+
+-- kwaMashu Line
+-- Bridge City Station
+-- passenger
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555057703,
+		555009423,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Duff''s Road - Bridge City (kwaMashu Line)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail.'
+where oid in (select edge from tmp);
+
+-- Duff's Road - Stanger
+-- Northern Coast Line
+-- Transnet core
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555057703,
+		555061665,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Duff''s Road - Stanger',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Durban Metrorail (Northern Coast Line) and Transnet core network'
+where oid in (select edge from tmp);
+
+
+-- Port of Durban
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555126135',
+            555004705,
+		555004639,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Durban',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Point and Leisure Precinct 
+update africa_osm_nodes
+set name = 'Port of Durban (Point and Leisure Precinct)',
+railway = 'stop',
+facility = 'port'
+where oid = 555066658;
+
+-- split 555007592 at 555066658
+select rn_split_edge(array[555007592], array[555066658]);
+-- split 555015487 at 555066648
+select rn_split_edge(array[555015487], array[555066648]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555126135',
+            555057969,
+		555066658,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Durban (Point and Leisure Precinct)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Maydon Wharf Precinct
+update africa_osm_nodes
+set name = 'Port of Durban (Maydon Wharf Precinct)',
+railway = 'stop',
+facility = 'port'
+where oid = 555066080;
+
+-- split 555007433 at 555066588
+select rn_split_edge(array[555007433], array[555066588]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555126135',
+            555057969,
+		555066080,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Durban (Maydon Wharf Precinct)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Container Precinct
+update africa_osm_nodes
+set name = 'Port of Durban (Container Precinct)',
+railway = 'stop',
+facility = 'port'
+where oid = 555057555;
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555126135',
+            555057969,
+		555057555,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Durban (Container Precinct)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- Island View Precinct
+update africa_osm_nodes
+set name = 'Port of Durban (Island View Precinct)',
+railway = 'stop',
+facility = 'port'
+where oid = 555067226;
+
+-- split 555005339 at 555067221
+select rn_split_edge(array[555005339], array[555067221]);
+-- split 555009039 at 555067225
+-- split 555009041 at 555067229
+-- split 555009043 at 555067226
+select rn_split_edge(array[555009039,555009041,555009043], array[555067225,555067229,555067226]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid != 555126135',
+            555057199,
+		555067226,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of Durban (Island View Precinct)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
 where oid in (select edge from tmp);
 
 -- stations
