@@ -4289,6 +4289,493 @@ status = 'open',
 comment = ''
 where oid in (select edge from tmp);
 
+-- Branch lines from Pietermaritzburg
+
+-- Pietermaritzburg - Kranskop
+-- disused from Potspruit (according to OSM)
+
+-- simplify
+select rn_insert_edge(555123283, 556030022, 556000113);
+update africa_osm_edges set status = 'open' where oid = 556000113;
+-- split 555117029 at 555123282
+select rn_split_edge(array[555117029], array[555123282]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            556030022,
+		555103655,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pietermaritzburg - Kranskop',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. Disused from Potspruit (according to OSM)'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555103655,
+		555012009,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pietermaritzburg - Kranskop',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Disused from Potspruit (according to OSM)'
+where oid in (select edge from tmp);
+
+
+-- Mount Alida branch line
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555071926,
+		555008162,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Mount Alida branch line',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line.'
+where oid in (select edge from tmp);
+
+-- Dalton - Glenside branch line
+-- disused from Fawn Leas - Glenside according to OSM
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555071922,
+		555103503,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Dalton - Glenside',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. Disused from Fawn Leas - Glenside according to OSM'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555103503,
+		555012012,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Dalton - Glenside',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Disused from Fawn Leas - Glenside according to OSM'
+where oid in (select edge from tmp);
+
+-- Schroeders - Bruyns Hill branch line
+-- disused
+
+-- split 555067397 at 555144754
+select rn_split_edge(array[555067397], array[555144754]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555144754,
+		555012016,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Schroeders - Bruyns Hill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Disused according to OSM'
+where oid in (select edge from tmp);
+
+-- Pietermaritzburg - Franklin
+-- Transnet branch line
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+           555134591 ,
+		555008196,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pietermaritzburg - Franklin',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- Franklin - Kokstad
+-- disused
+
+update africa_osm_nodes
+set name = 'Kokstad',
+railway = 'stop'
+where oid = ;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+           555008196 ,
+		555120949,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Franklin - Kokstad',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Franklin - Matatiele
+update africa_osm_nodes
+set name = 'Matatiele',
+railway = 'stop'
+where oid = 555074692;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+           555070896 ,
+		555074692,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Franklin - Kokstad',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'abandoned',
+comment = 'Transnet 2021 Report indicates closed, OSM indicates abandoned.'
+where oid in (select edge from tmp);
+
+-- Donnybrook - Underberg
+-- Transnet Branch line
+-- open according to Transnet 2021 report
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555070918,
+		555008236,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Donnybrook - Underberg',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. Open according to Transnet 2021 report'
+where oid in (select edge from tmp);
+
+-- Pentrich - Richmond
+-- Transnet branch line
+-- according to Transnet 2021 report line is open - OSM says disused.
+
+-- simplify
+select rn_insert_edge(555134584, 555069389, 556000114);
+-- split 555106760 at 555134584
+select rn_split_edge(array[555106760], array[555134584]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555134584,
+		555006833,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pentrich - Richmond',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'unclear',
+comment = 'Transnet branch line. Open according to Transnet 2021 report. OSM says disused.'
+where oid in (select edge from tmp);
+
+-- Ennersdale - Bergville
+-- Transnet branch line
+-- open according to Transnet 2021 Report
+
+-- split 555033471 at 555070849
+select rn_split_edge(array[555033471], array[555070849]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555070849,
+		555013111,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ennersdale - Bergville',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line. Open according to Transnet 2021 report.'
+where oid in (select edge from tmp);
+
+
+-- Harrismith - Warden
+-- Closed line according to Transnet 2021 report (though OSM says open)
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555065375,
+		555000648,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Harrismith - Warden',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Closed line according to Transnet 2021 report (though OSM says open)'
+where oid in (select edge from tmp);
+
+-- Firham - Vrede
+-- closed according to Transnet 2021 report map
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555119690,
+		555000636,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Firham - Vrede',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Closed line according to Transnet 2021 report.'
+where oid in (select edge from tmp);
+
+-- Tutuka - New Denmark Colliery
+-- Transnet 2021 Report map has this line closed. OSM says open.
+
+update africa_osm_nodes
+set name = 'New Denmark Colliery (Tutuka Power Station)',
+railway = 'stop',
+facility = 'mine'
+where oid = 555127984;
+
+select rn_split_edge(array[555047846], array[555127984]);
+-- split 555111398 at 555070779
+select rn_split_edge(array[555111398], array[555070779]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555070779,
+		555127984,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tutuka - New Denmark Colliery',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Closed line according to Transnet 2021 report. Colliery probably dedicated to supplying Tutuka power station'
+where oid in (select edge from tmp);
+
+-- Palmford - Majuba Power Station
+-- Believed to now be disused
+-- Replaced by the new Esom private railway from near Ermelo
+-- see: http://bit.ly/3LJAxta
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555058320,
+		555011609,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Palmford - Majuba Power Station',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = 'Believed to now be disused. Replaced by road transport and now the new Eskom private railway from near Ermelo. See: http://bit.ly/3LJAxta'
+where oid in (select edge from tmp);
+
+
+-- Springs - Ermelo (Transnet depot)
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555001501,
+		555045676,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Springs - Ermelo (Transnet depot)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Transnet Depot, Ermelo
+
+-- split 555024927 at 555077861
+select rn_split_edge(array[555024927], array[555077861]);
+-- split 555028515 at 555132615
+select rn_split_edge(array[555028515], array[555132615]);
+
+update africa_osm_nodes
+set name = 'Transnet Depot, Ermelo',
+railway = 'stop',
+facility = 'railway'
+where oid = 555075124;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555077861,
+		555075124,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Transnet Depot, Ermelo',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+-- Majuba Power Station (Eskom)
+-- Private line
+-- see: http://bit.ly/3LJAxta
+
+update africa_osm_nodes
+set name = 'Majuba Power Station (Eskom)'
+where oid = 555011609;
+
+--split 555052652 at 555149317
+-- split 555024106 at 555093801
+select rn_split_edge(array[555052652,555024106], array[555149317,555093801]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555036737,
+		555011609,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Majuba Power Station (Eskom private line)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'New Eskom private railway to transport coal to power station from near Ermelo. See: http://bit.ly/3LJAxta.'
+where oid in (select edge from tmp);
+
+-- Ermelo (Transnet Depot) - Vryheid
+
+-- split 555108738 at 555136201
+select rn_split_edge(array[555108738], array[555136201]);
+select rn_insert_edge(555136232, 555085235, 556000115);
+update africa_osm_edges set status = 'open' where oid = 556000115;
+
+select rn_copy_node(array[555129764], array[555100363]);
+
+update africa_osm_nodes
+set name = 'Vryheid (Transnet Depot)',
+facility = 'railway',
+railway = 'stop'
+where oid = 556129764;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555045676,
+		556129764,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ermelo (Transnet Depot) - Vryheid (Transnet Depot)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555008101,
+		555008100,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ermelo (Transnet Depot) - Vryheid',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network'
+where oid in (select edge from tmp);
+
 -- stations
 -- Kamfersdam
 select rn_copy_node(array[555003293], array[555117744]);
