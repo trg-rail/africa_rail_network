@@ -5661,6 +5661,625 @@ status = 'disused',
 comment = ''
 where oid in (select edge from tmp);
 
+-- Waterberg Line
+-- Serves coalfields near Lephalale - the Waterberg coalfields (Grootegeluk coal mine)
+
+update africa_osm_nodes
+set name = 'Grootegeluk Coal Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'coal mine'
+where oid = 555134526;
+
+update africa_osm_nodes
+set name = 'Matimba Power Station',
+railway = 'stop',
+facility = 'power station'
+where oid = 555084567;
+
+update africa_osm_nodes
+set name = 'Thabazimbi',
+railway = 'station'
+where oid = 555106624;
+
+-- Lephalale - Thabazimbi
+-- Waterberg Line
+
+-- split 555039799 at 555084568
+select rn_split_edge(array[555039799], array[555084568]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555084568,
+		555106624,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lephalale - Thabazimbi (Waterberg Line)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet Core Network. Coal Line. Diesel'
+where oid in (select edge from tmp);
+
+-- Thabazimbi - Pyramid South
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555106624,
+		555072204,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Thabazimbi - Pyramid South (Waterberg Line)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet Core Network. Coal Line. Electrified'
+where oid in (select edge from tmp);
+
+-- Pendoring - Atlanta
+-- Branch line
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555070356,
+		555010657,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pendoring - Beestekraal - Atlanta',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet branch line'
+where oid in (select edge from tmp);
+
+-- PPC Beestekraal
+-- limestone mine and associated crushing plant facility
+update africa_osm_nodes
+set name = 'PPC Beestekraal',
+railway = 'stop',
+facility = 'mine',
+comment = 'limestone mine and associated crushing plant facility'
+where oid = 555074717;
+
+select rn_split_edge(array[555023855], array[555074717]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555010657,
+		555074717,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'PPC Beestekraal',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Grootegeluk Coal Mine
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555084568,
+		555134526,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Grootegeluk Coal Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Matimba Power Station
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555084568,
+		555084567,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Matimba Power Station',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Armandelbult Complex
+
+-- Dishaba Mine
+-- various metals
+-- http://bit.ly/3Kf7DzY
+
+-- split 555067737 at 555103690
+select rn_split_edge(array[555067737], array[555103690]);
+-- split 555015372 at 555103719
+select rn_split_edge(array[555015372], array[555103719]);
+-- split 555067732 at 555103716
+-- split 555067728 at 555103699
+-- split 5550677372 at 555103700
+select rn_split_edge(array[555067732,555067728,5550677372], array[555103716,555103699,555103700]);
+
+
+update africa_osm_nodes
+set name = 'Armandelbult Complex (Dishaba and Tumela mines)',
+railway = 'stop',
+facility = 'mine',
+comment = 'Mining of platinum group (PGM) metals plus concentrators and chrome plant. See: http://bit.ly/3Kf7DzY'
+where oid = 555103690;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555103719,
+		555103690,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Armandelbult Complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Armandelbult Complex (Tiumela Mine 1 Shaft)
+
+-- split 555067754 at 555103745
+select rn_split_edge(array[555067754], array[555103745]);
+-- split 555067727 at 555103746
+select rn_split_edge(array[555067727], array[555103746]);
+
+
+update africa_osm_nodes
+set name = 'Armandelbult Complex (Tumela mine)',
+railway = 'stop',
+facility = 'mine',
+comment = 'Mining of platinum group (PGM) metals plus concentrators and chrome plant. See: http://bit.ly/3Kf7DzY'
+where oid = 555027892;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555103746,
+		555027892,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Armandelbult Complex (Tumela mine)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- PPC Dwaalboom cement factory
+
+-- split 555023896 at 555070353
+select rn_split_edge(array[555023896], array[555070353]);
+
+update africa_osm_nodes
+set name = 'PPC Dwaalboom (Cement factory)',
+railway = 'stop',
+facility = 'manufacturing'
+where oid = 555070353;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555070351,
+		555070353,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'PPC Dwaalboom (Cement Factory)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- Union Mine
+-- various metals
+
+update africa_osm_nodes
+set name = 'Union Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'platinum group (PGM) metals, see: http://bit.ly/40BPj9q'
+where oid = 555050520;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555103701,
+		555050520,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Union Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Impala Platinum Mines complex
+-- see:  https://www.mindat.org/loc-11952.html
+
+-- split 555039773 at 555084534
+select rn_split_edge(array[555039773], array[555084534]);
+-- split 555032823 at 555084532
+select rn_split_edge(array[555032823], array[555084532]);
+-- split 555039775 at 555084536
+select rn_split_edge(array[555039775], array[555084536]);
+-- split 555039774 at 555084540
+-- split 555039765 at 555084542
+select rn_split_edge(array[555039774,555039765], array[555084540,555084542]);
+
+update africa_osm_nodes
+set name = 'Impala Platinum Mines complex',
+railway = 'stop',
+facility = 'mine',
+comment = 'Platinum mines. See: https://www.mindat.org/loc-11952.html' 
+where oid = 555084535;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555084532,
+		555084535,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Impala Platinum Mines complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Sibanye-Stillwater PGM mine and operation complex 
+-- platinum group (PGM) metals
+
+update africa_osm_nodes
+set name = 'Sibanye-Stillwater PGM complex (West)',
+railway = 'stop',
+facility = 'mine',
+comment = 'platinum group (PGM) metals mining and preocessing. See: http://bit.ly/3M5Jjlg'
+where oid = 555033719;
+
+-- split 555023669 at 555084482
+select rn_split_edge(array[555023669], array[555084482]);
+-- split 555087120 at 555118803
+select rn_split_edge(array[555087120], array[555118803]);
+-- split 555036605 at 555084478
+select rn_split_edge(array[555036605], array[555084478]);
+-- split 555035393 at 555084471
+select rn_split_edge(array[555035393], array[555084471]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555084482,
+		555033719,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sibanye-Stillwater PGM complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+update africa_osm_nodes
+set name = 'Sibanye-Stillwater PGM complex (East)',
+railway = 'stop',
+facility = 'mine',
+comment = 'platinum group (PGM) metals mining and preocessing. See: http://bit.ly/3M5Jjlg'
+where oid = 555034078;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555084498,
+		555034078,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sibanye-Stillwater PGM complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+update africa_osm_nodes
+set name = 'Sibanye-Stillwater PGM complex (Siphumelele Mine)',
+railway = 'stop',
+facility = 'mine',
+comment = 'platinum group (PGM) metals mining and preocessing. See: http://bit.ly/3M5Jjlg'
+where oid = 555083680;
+
+-- split 555035391 at 555083679
+select rn_split_edge(array[555035391], array[555083679]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555081549,
+		555083680,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sibanye-Stillwater PGM complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Rooiwal Power Station
+-- believed to be mothballed. See: https://www.gem.wiki/Rooiwal_power_station
+
+-- simplify
+select rn_insert_edge(555070709, 555047526, 556000123);
+
+update africa_osm_nodes
+set name = 'Rooiwal Power Station',
+railway = 'stop',
+facility = 'power station',
+comment = 'believed to be mothballed. See: https://www.gem.wiki/Rooiwal_power_station. Assume line is disused.'
+where oid = 555030614;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555047526,
+		555030614,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rooiwal Power Station',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'disused',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Leeupan Colliery
+
+	 insert into africa_osm_nodes (
+oid, railway, name, country, gauge, facility, geom)
+ values (
+ 558000103,
+ null,
+ null,
+ 'South Africa',
+ null,
+ null,
+ ST_SetSRID(ST_Point(28.72978,-26.16598), 4326)
+ )
+;
+
+select rn_copy_node(array[558000103], array[555052650]);
+-- 559000103
+
+update africa_osm_nodes
+set name = 'Leeupan Colliery',
+railway = 'stop',
+facility = 'mine',
+comment = 'coal mine'
+where oid = 559000103;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555047846,
+		559000103,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Leeupan Colliery',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- Delmas Colliery
+
+-- split 555015029 at 555135165
+select rn_split_edge(array[555015029], array[555135165]);
+
+update africa_osm_nodes
+set name = 'Delmas Colliery',
+railway = 'stop',
+facility = 'mine',
+comment = 'coal mine'
+where oid = 555135165;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555047851,
+		555135165,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Delmas Colliery',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Silica mine (Thaba Chueu Mining)
+update africa_osm_nodes
+set name = 'Silica mine (Thaba Chueu Mining)',
+railway = 'stop',
+facility = 'mine',
+comment = 'silica mine'
+where oid = 555021912;
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555058678,
+		555021912,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Silica mine (Thaba Chueu Mining)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Kendal Afgri Silo
+
+update africa_osm_nodes
+set name = 'Kendal Afgri Silo',
+railway = 'stop',
+facility = 'food storage',
+comment = 'grain silos'
+where oid = 555154284;
+
+-- split 555019228 at 555139994
+select rn_split_edge(array[555019228], array[555139994]);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555139994,
+		555154284,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kendal Afgri Silo',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Phola coal washing facility
+-- see: https://draglobal.com/projects/phola-coal-mine/
+-- largest coal washing  facility in South Africa
+
+update africa_osm_nodes
+set name = 'Phola coal washing facility',
+railway = 'stop',
+facility = 'mining',
+comment = 'see: https://draglobal.com/projects/phola-coal-mine/ largest coal washing  facility in South Africa'
+where oid = 555117008;
+
+--split 555019226 at 555106301
+select rn_split_edge(array[555019226], array[555106301]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555106301,
+		555117008,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Phola coal washing facility',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Ogies grain silos
+update africa_osm_nodes
+set name = 'Ogies grain silos',
+railway = 'stop',
+facility = 'food storage',
+comment = 'grain silos'
+where oid = 555016118;
+
+-- split 555107152 at 555134973
+-- split 555036855 at 555134972
+-- split 555113507 at 555134974
+-- split 5550192252 at 555134975
+
+select rn_split_edge(array[555107152, 555036855, 555113507, 5550192252], array[555134973, 555134972, 555134974, 555134975]);
+
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555134975,
+		555016118,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Ogies grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
 
 -- stations
 -- Kamfersdam
