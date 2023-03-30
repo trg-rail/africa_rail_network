@@ -6786,6 +6786,235 @@ where oid in (select edge from tmp);
 -- Sasol Synfuels complex, Secunda
 -- operates the world's only commercial coal-based synthetic fuels manufacturing facility, producing synthesis gas (syngas) through coal gasification and natural gas reforming.
 
+update africa_osm_nodes
+set name = 'Sasol Synfuels Complex, Secunda',
+railway = 'stop',
+facility = 'manufacturing',
+comment = 'operates the world''s only commercial coal-based synthetic fuels manufacturing facility, producing synthesis gas (syngas) through coal gasification and natural gas reforming'
+where oid = 555058487;
+
+select rn_insert_edge(555099465, 555133450, 556000127);
+ update africa_osm_edges set status = 'open' where oid = 556000127;
+ 
+ -- split 555030746 at 555133484
+  select rn_split_edge(array[555030746], array[555133484]);
+	-- split 555034746 at 555133450
+  select rn_split_edge(array[555034746], array[555133450]);
+	-- split 555105469 at 555133486
+	 select rn_split_edge(array[555105469], array[555133486]);
+
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555133450,
+		555058487,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sasol Synfuels Complex, Secunda',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Sasol Explosives, Ekandustria
+update africa_osm_nodes
+set name = 'Sasol Explosives, Ekandustria',
+railway = 'stop',
+facility = 'manufacturing',
+comment = 'manufacture of mining explosives'
+where oid = 555047617;
+
+-- split 555113084 at 555139406
+	 select rn_split_edge(array[555113084], array[555139406]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555008085,
+		555047617,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sasol Explosives, Ekandustria',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'unclear',
+comment = 'OSM says disused in part.'
+where oid in (select edge from tmp);
+
+-- Gauteng metrorail
+
+-- Vereeniging - Germiston
+-- created in parts to ensure route.
+
+select rn_copy_node(array[555050277], array[555082426]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555048499,
+		555013459,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vereeniging - Germiston',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail and Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani. Transnet core network'
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555013459,
+		556050277,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vereeniging - Germiston',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail and Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani. Transnet core network'
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            556050277,
+		555024426,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vereeniging - Germiston',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail and Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani. Transnet core network'
+where oid in (select edge from tmp);
+
+--  Germiston - Johannesburg Park Station
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' ',
+            555024426,
+		555003240,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Germiston - Johannesburg Park Station',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail and Shosholoza Meyl long distance passenger service Johannesburg – Queenstown/Komani. Transnet core network'
+where oid in (select edge from tmp);
+
+-- Elsburg - Kwesine
+-- simplify
+select rn_insert_edge(555032897, 555013457, 556000128);
+ update africa_osm_edges set status = 'open' where oid = 556000128;
+update africa_osm_nodes set railway = 'station' where oid = 555001416;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555082473, 555082474, 555058989) ',
+            555032897,
+		555001416,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Elsburg - Kwesine',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Elsberg - President (via Webber)
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555082473, 555096169, 555082436)',
+            555116727,
+		555032868,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Elsberg - President (via Webber)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- India - New Canada
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555059291, 555111189, 555114186) ',
+            555024520,
+		555000141,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'India - New Canada',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+
+-- George Goch - Kaserne West (via Benrose)
+
+update africa_osm_nodes set railway = 'station' where oid = 555061786;
+update africa_osm_nodes set railway = null where oid = 555032838;
+
+select rn_insert_edge(555062338, 555061786, 556000129);
+update africa_osm_edges set status = 'open' where oid = 556000129;
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555095675, 555095674, 555013351, 555013499) ',
+            555061786,
+		555032854,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'George Goch - Kaserne West (via Benrose)',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+
+
 -- stations
 -- Kamfersdam
 select rn_copy_node(array[555003293], array[555117744]);
