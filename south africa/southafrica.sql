@@ -5151,16 +5151,35 @@ where oid in (select edge from tmp);
 -- split 555044880 at 555068686
 select rn_split_edge(array[555044880], array[555068686]);
 
+update africa_osm_nodes set railway = 'station' where oid = 555001447;
+
 with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555004493, 555113574,555004487,5550448802,5550448801) ',
             555001501,
+		555001447,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Springs - Nigel',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Gauteng metrorail. OSM has the section from Nigel to Kaydale as disused, however, this is shown as part of the Transnet core network in the 2021 annual report map so assume open.'
+where oid in (select edge from tmp);
+
+with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and oid not in (555004493, 555113574,555004487,5550448802,5550448801) ',
+            555001447,
 		555068686,
 		false
 		) AS X
 		ORDER BY seq)
 update africa_osm_edges
-set line = 'Springs - Kaydale',
+set line = 'Nigel - Kaydale',
 mode = 'freight',
 type = 'conventional',
 gauge = '1067',
@@ -7313,6 +7332,559 @@ type = 'conventional',
 gauge = '1435',
 status = 'open',
 comment = 'GauTrain'
+where oid in (select edge from tmp);
+
+-- section from Pretoria - Hatfield
+
+update africa_osm_nodes
+set name = 'Hatfield (GauTrain)' where oid =  555008774;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555036024,
+		555008774,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'GauTrain (Pretoria - Hatfield)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1435',
+status = 'open',
+comment = 'GauTrain'
+where oid in (select edge from tmp);
+
+-- SWITCH TO 1067mm GAUGE
+
+-- Germiston - Pretoria
+-- Transnet Core
+-- Metrorail
+-- and Shosholoza Meyl long distance passenger service Musina - Johannesburg
+
+-- simplify
+select rn_insert_edge(555116712, 555024444, 556000131);
+update africa_osm_edges set status = 'open' where oid = 556000131;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555024444,
+		555008844,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Germiston - Pretoria',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network, GauTeng Metrorail, Shosholoza Meyl long distance passenger service Musina - Johannesburg'
+where oid in (select edge from tmp);
+
+-- Kaalfontein - Leralla
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555063682,
+		555061840,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Kaalfontein - Leralla',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'GauTeng Metrorail'
+where oid in (select edge from tmp);
+
+-- Olifantsfontein/Oakmoor - Sentrarand Marshalling Yard
+-- Transnet core network
+-- Freight
+
+-- split 555012029 at 555064819
+select rn_split_edge(array[555012029], array[555064819]	);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555064819,
+		555048208,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Olifantsfontein/Oakmoor - Sentrarand Marshalling Yard',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. electrified'
+where oid in (select edge from tmp);
+
+-- additional link
+
+select rn_insert_edge(555034523, 555001452, 556000132);
+update africa_osm_edges set status = 'open' where oid = 556000132;
+-- simplify
+select rn_copy_node(array[555039209], array[555003309]);
+select rn_change_target(555012026, 556039209);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555001452,
+		555002917,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Olifantsfontein/Oakmoor - Sentrarand Marshalling Yard',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. electrified'
+where oid in (select edge from tmp);
+
+-- Germiston - Springs
+
+-- split 555082423 at 555116689
+select rn_split_edge(array[555082423], array[555116689]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
+            555116689,
+		555014309,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Germiston - Springs',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network, GauTeng Metrorail'
+where oid in (select edge from tmp);
+
+-- Skansdam - Transnet Welgedag Depot
+-- Core network
+-- Freight only
+
+-- split 555134481 at 555140952
+-- split 555019581 at 555140951
+select rn_split_edge(array[555134481,555019581], array[555140952,555140951]);
+-- split 5550588831 at 555098041
+select rn_split_edge(array[5550588831], array[555098041]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555004492) ',
+            555140951,
+		555098041,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Skansdam - Transnet Welgedag Depot',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Electrified.'
+where oid in (select edge from tmp);
+
+-- links
+-- split 555004646 at 555065389
+select rn_split_edge(array[555004646], array[555065389]);
+select rn_change_target(555017607, 555140251);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555065389,
+		555140251,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line junction',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Electrified.'
+where oid in (select edge from tmp);
+
+-- split 555004648 at 555140254
+-- split 555017783 at 555140257
+select rn_split_edge(array[555004648,555017783], array[555140254,555140257]);
+select rn_insert_edge(555140254, 555140257, 556000133);
+update africa_osm_edges set status = 'open' where oid = 556000133;
+select rn_copy_node(array[555065392], array[555115674]);
+select rn_change_target(555004649, 556065392);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555140257,
+		556065392,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line junction',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network. Electrified.'
+where oid in (select edge from tmp);
+
+-- split 5550177832 at 555068695
+select rn_split_edge(array[5550177832], array[555068695);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555140576,
+		555068695,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Line link',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Electrified.'
+where oid in (select edge from tmp);
+
+-- Dunswart - Daveyton
+
+-- split 555119593 at 555140449
+-- split 555119590 at 555140448
+select rn_split_edge(array[555119593,555119590], array[555140449,555140448]);
+
+update africa_osm_nodes
+set railway = null where oid = 555061593;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555140448,
+		555061594,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Dunswart - Daveyton',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Pretoria - Pretoria Wes
+-- Core network
+-- Metrorail
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555008844,
+		555001489,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pretoria - Pretoria Wes',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network, Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Pretoria Wes - Pretoria Nord
+-- Core network
+-- Metrorail
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555001489,
+		555001488,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pretoria Wes - Pretoria Nord',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network, Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Saulsville - Pretoria Wes
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555001514,
+		555000063,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Saulsville - Pretoria Wes',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Rebecca - Schuttestraat
+
+update africa_osm_nodes set railway = null where oid = 555036150;
+select rn_copy_node(array[555001471], array[555089528]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555036091,
+		555036086,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rebecca - Schuttestraat',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Hercules - Belle Ombre
+
+update africa_osm_nodes set railway = null where oid = 555050696;
+select rn_copy_node(array[555001389], array[555089751]);
+--simplify
+select rn_insert_edge(555121681, 555036165, 556000134);
+update africa_osm_edges set status = 'open' where oid = 556000134;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555036165,
+		555050698,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hercules - Belle Ombre',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555036091,
+		555036086,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rebecca - Schuttestraat',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Hercules - Pienaarspoort
+
+-- split 5550897512 at 555121691
+select rn_split_edge(array[5550897512], array[555121691]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555121691,
+		555048236,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Hercules - Pienaarspoort',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Rayton - Pienaarspoort
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555061880,
+		555048236,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rayton - Pienaarspoort',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Transnet core network, Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- freight link
+
+update africa_osm_nodes
+set railway = null where oid in (555063236,555048384);
+
+-- simplify
+select rn_insert_edge(555035791, 555001372, 556000135);
+update africa_osm_edges set status = 'open' where oid = 556000135;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555135440,
+		555001372,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Greenview Junction (freight link)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Rayton - Cullinan
+
+update africa_osm_nodes set railway = 'station' where oid = 555001333;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555008080,
+		555001333,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rayton - Cullinan',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Believed to only be used for tourist tours by steam train to the diamond mine adjacent to Cullinan station.'
+where oid in (select edge from tmp);
+
+-- Pretoria - Koedoespoort
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555096535,
+		555035977,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pretoria - Koedoespoort',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Rovos Rail
+-- private tourist train
+
+select rn_copy_node(array[555050299], array[555090084]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555068488,
+		556050299,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Rovos Railway station (private)',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Station used by tourist trains'
+where oid in (select edge from tmp);
+
+-- Pretoria Nord - De Wildt
+
+update africa_osm_nodes
+set railway = null where oid = 555049908;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555053387,
+		555049901,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Pretoria Nord - De Wildt',
+mode = 'mixed',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
+where oid in (select edge from tmp);
+
+-- Winternest - Mabopane
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555068342,
+		555001430,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Winternest - Mabopane',
+mode = 'passenger',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = 'Gauteng metrorail'
 where oid in (select edge from tmp);
 
 
