@@ -7887,6 +7887,488 @@ status = 'open',
 comment = 'Gauteng metrorail'
 where oid in (select edge from tmp);
 
+-- Lafarge Tswana Lime Quarry
+update africa_osm_nodes
+set name = 'Lafarge Tswana Lime',
+railway = 'stop',
+facility = 'quarry',
+comment = 'limestone quarry'
+where oid = 555050653;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555001705,
+		555050653,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lafarge Tswana Lime Quarry',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Springbokan grain silos
+update africa_osm_nodes
+set name = 'Springbokan grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555050654;
+
+-- split 555014510 at 555138726
+select rn_split_edge(array[555014510], array[555138726]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555138726,
+		555050654,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Springbokan grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- Lafarge Lichtenburg limestone quarry and plant
+
+select rn_copy_node(array[555138715], array[555111605]);
+
+update africa_osm_nodes
+set name = 'Lafarge Lichtenburg (limestone quarry and plant)',
+railway = 'stop',
+facility = 'quarry',
+comment = ''
+where oid = 556138715;
+
+-- split 555011842 at 555138720
+select rn_split_edge(array[555011842], array[555138720]);
+-- split 555011245 at 555068635
+select rn_split_edge(array[555011245], array[555068635]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555068635,
+		556138715,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lafarge Lichtenburg (limestone quarry and plant)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- NWK Lichtenburg grain silos
+
+update africa_osm_nodes
+set name = 'NWK Lichtenburg grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555076109;
+
+select rn_insert_edge(555001705, 555076108, 556000136);
+update africa_osm_edges set status = 'open' where oid = 556000136;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555001705,
+		555076109,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'NWK Lichtenburg grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Afrisam Dudfield Cement Factory
+
+update africa_osm_nodes
+set name = 'Afrisam Dudfield Cement Factory',
+railway = 'stop',
+facility = 'manufacturing'
+where oid =  555007411;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555070039,
+		555007411,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Afrisam Dudfield Cement Factory',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+-- NWK Hibernia Grain silos
+update africa_osm_nodes
+set name = 'NWK Hibernia Grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555105806;
+
+-- split 555014502 at 555105807
+
+select rn_split_edge(array[555014502], array[555105807]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555105807,
+		555105806,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'NWK Hibernia Grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Vaal Reefs Goldmine complex
+
+update africa_osm_nodes
+set name = 'Vaal Reefs gold mine complex',
+railway = 'stop',
+facility = 'mine',
+comment = 'Gold mine. Access point'
+where oid = 555033116;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555080223,
+		555033116,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Vaal Reefs gold mine complex (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Tshepong Harmony Gold Mine
+update africa_osm_nodes
+set name = 'Tshepong Harmony Gold Mine',
+railway = 'stop',
+facility = 'mine',
+comment = 'Gold mine'
+where oid = 555011393;
+
+-- split 555029578 at 555075857
+select rn_split_edge(array[555029578], array[555075857]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555075857,
+		555011393,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tshepong Harmony Gold Mine',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Senwes Grainlink Odendaalsrus grain silos
+
+-- split 555025599 at 555075879
+select rn_split_edge(array[555025599], array[555075879]);
+
+update africa_osm_nodes
+set name = 'Senwes Grainlink Odendaalsrus grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555151631;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555075879,
+		555151631,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Senwes Grainlink Odendaalsrus grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Welkom gold mines (access)
+
+-- split 555025587 at 555075848
+select rn_split_edge(array[555025587], array[555075848]);
+
+update africa_osm_nodes
+set name = 'Welkom gold mines (access)',
+railway = 'stop',
+facility = 'mine'
+where oid =  555052656;
+
+-- split 555117030 at 555117110
+select rn_split_edge(array[555117030], array[555117110]);
+-- split 5551170301 at 555075847
+select rn_split_edge(array[5551170301], array[555075847]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555117110,
+		555052656,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Welkom gold mines (access)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Senwes Grainlink Hennenman grain silos
+update africa_osm_nodes
+set name = 'Senwes Grainlink Hennenman grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555089268;
+
+-- Tiger Milling Hennenman - grain mill
+
+update africa_osm_nodes
+set name = 'Tiger Milling Hennenman',
+railway = 'stop',
+facility = 'food manufacture',
+comment = 'grain mill'
+where oid =  555019615;
+
+-- split 555131741 at 555091626
+select rn_split_edge(array[555131741], array[555091626]);
+-- split 555049792 at 555089266
+select rn_split_edge(array[555049792], array[555089266]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555060187,
+		555019615,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tiger Milling Hennenman',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555019614,
+		555089268,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Senwes Grainlink Hennenman grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Shell Fuel storage depot
+update africa_osm_nodes
+set name = 'Shell Fuel storage depot, Kroonstad',
+railway = 'stop',
+facility = 'fuel storage depot',
+comment = ''
+where oid =  555059175;
+
+-- split 555070191 at 555136443
+select rn_split_edge(array[555070191], array[555136443]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555138645,
+		555059175,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Shell Fuel storage depot, Kroonstad',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+
+update africa_osm_nodes
+set name = 'Senwes Grainlink Viljoenskroon grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555019156;
+
+update africa_osm_nodes
+set name = 'Senwes Grainlink Viljoenskroon grain silos',
+railway = 'stop',
+facility = 'food storage'
+where oid =  555151795;
+
+select rn_insert_edge(555059609, 555059608, 556000137);
+update africa_osm_edges set status = 'open' where oid = 556000137;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555059609,
+		555019156,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Senwes Grainlink Viljoenskroon grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- split 555045023 at 555151795
+select rn_split_edge(array[555045023], array[555151795]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555059609,
+		555151795,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Senwes Grainlink Viljoenskroon grain silos',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- ArcelorMittal South Africa Vanderbijlpark Steel works
+
+update africa_osm_nodes
+set name = 'ArcelorMittal South Africa Vanderbijlpark Steel works',
+railway = 'stop',
+facility = 'manufacturing'
+where oid = 555152289;
+
+-- simplify
+select rn_copy_node(array[555063596],array[555035454]);
+select rn_insert_edge(555063596, 556063596, 556000138);
+update africa_osm_edges set status = 'open' where oid = 556000138;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            556063596,
+		555152289,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'ArcelorMittal South Africa Vanderbijlpark Steel works',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Lethano Power Station (Eskom)
+update africa_osm_nodes
+set name = 'Lethano Power Station (Eskom)',
+railway = 'stop',
+facility = 'power station'
+where oid = 555053252;
+
+-- split 555070853 at 555152411
+-- split 555132686 at 555152412
+select rn_split_edge(array[555070853,555132686], array[555152411,555152412]);
+-- split 555134463 at 555065423
+select rn_split_edge(array[555134463], array[555065423]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555152412,
+		555053252,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Lethano Power Station (Eskom)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
 
 -- stations
 -- Kamfersdam
