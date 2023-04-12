@@ -117,5 +117,12 @@ Progress:
   - [x] Freight spurs for strategic facilities, ports and dry ports
   - [ ] Speed cost
 - [ ] South Africa
-  - [ ] Strategic freight lines (Transnet)
-  - [ ] Metrorail (passenger routes where not shared with Transnet) 
+  - [x] Transnet core network
+  - [x] Transnet branch network
+  - [x] Metrorail networks (Durban area, Johannesburg/Pretoria area, Port Elizabeth/East London, Western Cape)
+  - [x] Long distance passenger services run by PRASA as Shosholoza Meyl  (only two routes currently)
+  - [x] Some private freight lines
+  - [x] 1435mm gauge Gautrain (express commuter rail)
+  - [x] Key freight destinations
+  - [x] Ports
+  - [ ] Speed cost
