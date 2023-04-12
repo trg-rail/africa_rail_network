@@ -9776,12 +9776,236 @@ where oid in (select edge from tmp);
 -- SAPREF oil refinery
 -- https://www.sapref.com/who-we-are
 update africa_osm_nodes
-set name = 'SAPREF oil refinery',
+set name = 'SAPREF oil refinery, Prospecton, Durban',
 railway = 'stop',
 facility = 'oil refinery',
 comment = 'see: https://www.sapref.com/who-we-are'
-where oid = ;
+where oid = 555147630;
 
+--simplify
+select rn_insert_edge(555065848, 555065849, 556000146);
+update africa_osm_edges set status = 'open' where oid = 556000146;
+
+-- split 555005793  at 555147631
+select rn_split_edge(array[555005793], array[555147631]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555065849,
+		555147630,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'SAPREF oil refinery, Prospecton, Durban',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Access World container rail transfer
+
+update africa_osm_nodes
+set name = 'Access World, Rossburgh, Durban (container rail transfer)',
+railway = 'stop',
+facility = 'container terminal',
+comment = ''
+where oid = 555066259;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' and oid not in (555009540,555009539) ',
+            555056914,
+		555066259,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Access World, Rossburgh, Durban (container rail transfer)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Tongaat Hulett Sugar Maidstone Mill
+update africa_osm_nodes
+set name = 'Tongaat Hulett Sugar Maidstone Mill',
+railway = 'stop',
+facility = 'food production',
+comment = ''
+where oid = 555004580;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555004577,
+		555004580,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tongaat Hulett Sugar Maidstone Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Gledhow Sugar Mill
+update africa_osm_nodes
+set name = 'Gledhow Sugar Company - Gledhow Mill',
+railway = 'stop',
+facility = 'food production',
+comment = ''
+where oid = 555106024;
+
+-- split 555029606 at 555078670
+select rn_split_edge(array[555029606], array[555078670]);
+-- split 555046628 at 555078674
+select rn_split_edge(array[555046628], array[555078674]);
+-- split 555070134 at 555078676 
+select rn_split_edge(array[555070134], array[555078676]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555078674,
+		555106024,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Gledhow Sugar Company - Gledhow Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Sappi Stanger Paper Mill
+update africa_osm_nodes
+set name = 'Sappi Stanger Paper Mill',
+railway = 'stop',
+facility = 'manufacturing',
+comment = ''
+where oid = 555106016;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555078670,
+		555106016,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sappi Stanger Paper Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Tongaat Hulett Sugar Amatikulu Mill
+update africa_osm_nodes
+set name = 'Tongaat Hulett Sugar Amatikulu Mill',
+railway = 'stop',
+facility = 'food production',
+comment = ''
+where oid = 555120918;
+
+-- split 555094945 at 555125737
+select rn_split_edge(array[555094945], array[555125737]);
+-- split 555094957 at 555089770
+select rn_split_edge(array[555094957], array[555089770]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555125737,
+		555120918,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tongaat Hulett Sugar Amatikulu Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Tongaat Hulett Sugar Felixton Mill
+update africa_osm_nodes
+set name = 'Tongaat Hulett Sugar Felixton Mill',
+railway = 'stop',
+facility = 'food production',
+comment = ''
+where oid = 555125564;
+
+-- split 555094808 at 555125588
+select rn_split_edge(array[555094808], array[555125588]);
+-- split 555094795 at 555125569
+select rn_split_edge(array[555094795], array[555125569]);
+-- split 555094781 at 555125554
+select rn_split_edge(array[555094781], array[555125554]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555125588,
+		555125564,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Tongaat Hulett Sugar Felixton Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Mpact Felixton Paper Mill
+
+update africa_osm_nodes
+set name = 'Mpact Felixton Paper Mill',
+railway = 'stop',
+facility = 'manufacturing',
+comment = ''
+where oid = 555125583;
+
+-- simplify
+select rn_insert_edge(555125582, 555038741, 556000147);
+update africa_osm_edges set status = 'open' where oid = 556000147;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555038741,
+		555125583,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Mpact Felixton Paper Mill',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
 
 -- stations
 -- Kamfersdam
@@ -9795,18 +10019,44 @@ where oid = 555071362;
 -- Ferguson
 select rn_copy_node(array[555001365], array[555095487]);
 
+update africa_osm_nodes set railway = null where oid = 555041612;
 
-select distinct facility from africa_osm_nodes
 update africa_osm_nodes
 set gauge = '1067'
 where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1067'))
 and country in ('South Africa') and railway in ('station', 'halt', 'stop');
 
-select distinct facility from africa_osm_nodes
 update africa_osm_nodes
 set gauge = '1435'
 where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '1435'))
 and country in ('South Africa') and railway in ('station', 'halt', 'stop');
+
+-- remove duplicated stations/stops on network lines
+
+with tmp as (
+select name from africa_osm_nodes where country = 'South Africa' and gauge is not null and railway = 'station' order by name
+)
+update africa_osm_nodes 
+set railway = null
+where country = 'South Africa' and gauge is not null and railway = 'stop' and name in (select name from tmp);
+
+-- oids that need to be copied to network line
+with tmp as (
+select * from africa_osm_nodes where
+country = 'South Africa' and "railway" IN ('halt','stop','station') and gauge is null and "name" NOT IN (select name from africa_osm_nodes where country = 'South Africa' and gauge = '1067' and "railway" IN ('halt','stop','station')and name is not null order by name) order by name
+), tmp2 as (
+select distinct on (name) name, oid, geom from tmp 
+), tmp3 as (
+-- find nearest 
+SELECT tmp2.name, tmp2.oid as node_oid, lines.oid as line_oid, st_distance(st_transform(tmp2.geom, 3857), st_transform(lines.geom, 3857))
+FROM tmp2, africa_osm_edges lines
+where lines.country = 'South Africa' and lines.line is not null
+ORDER by tmp2.name)
+select distinct on (name) st_distance, node_oid, line_oid from tmp3 where st_distance <50 order by name, st_distance asc
+
+--select t2.id,t2.record_date,t2.other_cols 
+--from (select ROW_NUMBER() over(partition by id order by record_date)as --rownum,id,record_date,other_cols from MyTable)t2 
+--where t2.rownum = 1
 
 -- extract tables (backup)
 create table southafrica_osm_edges as select * from africa_osm_edges where country in ('South Africa');
