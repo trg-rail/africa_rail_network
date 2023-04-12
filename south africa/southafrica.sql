@@ -9620,6 +9620,169 @@ comment = ''
 where oid in (select edge from tmp);
 
 
+-- Department of Defence Ammunition Depot, Vaalharts Nedersetting
+update africa_osm_nodes
+set name = 'Department of Defence Ammunition Depot, Vaalharts Nedersetting',
+railway = 'stop',
+facility = 'military'
+where oid = 555012283;
+
+-- split 555132866 at 555077408
+select rn_split_edge(array[555132866], array[555077408]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555077408,
+		555012283,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Department of Defence Ammunition Depot, Vaalharts Nedersetting',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Natal Portland Cement, Simuma
+update africa_osm_nodes
+set name = 'Natal Portland Cement Factory, Simuma',
+railway = 'stop',
+facility = 'manufacturing'
+where oid = 555075844;
+
+-- split 555122742 at 555075843
+select rn_split_edge(array[555122742], array[555075843]);
+-- split 555013463 at 555071272
+select rn_split_edge(array[555013463], array[555071272]);
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555071272,
+		555075844,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Natal Portland Cement Factory, Simuma',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Sappi Saiccor Paper Mill, Umkomaas
+-- See: https://www.sappi.com/saiccor-mill
+update africa_osm_nodes
+set name = 'Sappi Saiccor Paper Mill, Umkomaas',
+railway = 'stop',
+facility = 'manufacturing',
+comment = 'see: https://www.sappi.com/saiccor-mill'
+where oid = 555067762;
+
+-- split 555005912 at 555067780
+select rn_split_edge(array[555005912], array[555067780]);
+-- split 555010128 at 555146617
+select rn_split_edge(array[555010128], array[555146617]);
+
+update africa_osm_nodes
+set railway = null where oid = 555003934;
+
+-- simplify
+select rn_insert_edge(555067776, 555061632, 556000145);
+update africa_osm_edges set status = 'open' where oid = 556000145;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555061632,
+		555067762,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Sappi Saiccor Paper Mill, Umkomaas',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Anchor Yeast, Umbogintwini Industrial Complex
+update africa_osm_nodes
+set name = 'Anchor Yeast, Umbogintwini Industrial Complex',
+railway = 'stop',
+facility = 'manufacturing',
+comment = 'see:https://www.anchor.co.za/who-we-are/our-production-facility/'
+where oid = 555057263;
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555003899,
+		555057263,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Anchor Yeast, Umbogintwini Industrial Complex',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- Engen Oil Refinery, Merebank, Durban
+-- see: https://www.engen.co.za/about/manufacturing
+-- Reported to be converted to fuel storage facility in 2023
+-- see: http://bit.ly/3MKwNbc
+
+update africa_osm_nodes
+set name = 'Engen Oil Refinery, Wentworth, Durban',
+railway = 'stop',
+facility = 'oil refinery',
+comment = 'see: https://www.engen.co.za/about/manufacturing. Reported to be converted to fuel storage facility in 2023, see: http://bit.ly/3MKwNbc'
+where oid = 555067613;
+
+-- split 555005727 at 555147676
+--split 555009763 at 555147677
+select rn_split_edge(array[555005727,555009763], array[555147676,555147677]);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555147677,
+		555067613,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Engen Oil Refinery, Merebank, Durban',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
+-- SAPREF oil refinery
+-- https://www.sapref.com/who-we-are
+update africa_osm_nodes
+set name = 'SAPREF oil refinery',
+railway = 'stop',
+facility = 'oil refinery',
+comment = 'see: https://www.sapref.com/who-we-are'
+where oid = ;
+
+
 -- stations
 -- Kamfersdam
 select rn_copy_node(array[555003293], array[555117744]);
