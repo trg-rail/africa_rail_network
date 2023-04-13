@@ -123,6 +123,7 @@ Progress:
   - [x] Long distance passenger services run by PRASA as Shosholoza Meyl  (only two routes currently)
   - [x] Some private freight lines
   - [x] 1435mm gauge Gautrain (express commuter rail)
+  - [x] 610mm gauge Avontuur Branch Line (Apple Express)
   - [x] Key freight destinations
   - [x] Ports
   - [ ] Speed cost
