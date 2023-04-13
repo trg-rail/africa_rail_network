@@ -10007,6 +10007,25 @@ status = 'open',
 comment = ''
 where oid in (select edge from tmp);
 
+-- Port of East London (vehicle Terminal)
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555006426,
+		555006428,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_osm_edges
+set line = 'Port of East London (vehicle Terminal)',
+mode = 'freight',
+type = 'conventional',
+gauge = '1067',
+status = 'open',
+comment = ''
+where oid in (select edge from tmp);
+
 -- stations
 -- Kamfersdam
 select rn_copy_node(array[555003293], array[555117744]);
@@ -10018,8 +10037,335 @@ where oid = 555071362;
 
 -- Ferguson
 select rn_copy_node(array[555001365], array[555095487]);
+-- Mount Edgecombe
+update africa_osm_nodes set name = 'Mount Edgecombe', railway = 'station' where oid = 555003593;
+-- Kloof
+update africa_osm_nodes set name = 'Kloof', railway = 'station' where oid = 555065757;
+-- Hillcrest
+select rn_copy_node(array[555004067], array[555005681]);
+-- Cliffdale
+select rn_copy_node(array[555014538], array[555005954]);
+-- Umbilo
+select rn_copy_node(array[555004127], array[555006254]);
+-- Canelands
+update africa_osm_nodes set name = 'Canelands', railway = 'station' where oid = 555066424;
+-- Verulam
+update africa_osm_nodes set name = 'Verulam', railway = 'station' where oid = 555066463;
+-- Montclair
+update africa_osm_nodes set name = 'Montclair', railway = 'station' where oid = 555062575;
+-- Pelgrim
+select rn_copy_node(array[555061644], array[555009972]);
+-- Chatsglen
+update africa_osm_nodes set name = 'Chatsglen', railway = 'station' where oid = 555067797;
+-- Westcliff
+update africa_osm_nodes set name = 'Westcliff', railway = 'station' where oid = 555067799;
+-- Bayview
+update africa_osm_nodes set name = 'Bayview', railway = 'station' where oid = 555067800;
+-- Power Van Station
+select rn_copy_node(array[555007776], array[555010423]);
+-- Power
+select rn_copy_node(array[555002066], array[555010424]);
+-- Colesberg
+select rn_copy_node(array[555001109], array[555013076]);
+-- West Taffin
+select rn_copy_node(array[555047188], array[555013186]);
+-- Bergendal
+select rn_copy_node(array[555034430], array[555013995]);
+-- Alkmaar
+select rn_copy_node(array[555047155], array[555014003]);
+-- Penicuik
+select rn_copy_node(array[555044113], array[555017204]);
+-- Hillview
+select rn_copy_node(array[555032961], array[555019313]);
+-- Ottawa
+select rn_copy_node(array[555061674], array[555020188]);
+-- Uithoek
+select rn_copy_node(array[555043869], array[555029525]);
+-- Tayside
+select rn_copy_node(array[555007731], array[555029534]);
+-- Ngweni
+select rn_copy_node(array[555008141], array[555029631]);
+-- Mhlosinga
+select rn_copy_node(array[555008143], array[555029634]);
+-- Mlamlankunzi
+select rn_copy_node(array[555000140], array[555032440]);
+-- Shallcross
+select rn_copy_node(array[555004552], array[555032866]);
+-- Inchanga
+select rn_copy_node(array[555004064], array[555045839]);
+-- Keimoes
+select rn_copy_node(array[555001176], array[555050801]);
+-- Klawer
+select rn_copy_node(array[555002006], array[555051831]);
+-- Croesus
+select rn_copy_node(array[555001329], array[555053572]);
+-- Longdale
+update africa_osm_nodes set name = 'Longdale', railway = 'station' where oid = 555062624;
+-- Worcester
+select rn_copy_node(array[555061696], array[555053864]);
+-- Matjiesfontein
+select rn_copy_node(array[555062040], array[555055280]);
+-- Fonteine
+select rn_copy_node(array[555061856], array[555056829]);
+-- Hoogte
+select rn_copy_node(array[555000496], array[555057802]);
+-- Kempton Park
+select rn_copy_node(array[555061846], array[555058743]);
+-- Van Riebeeckpark
+select rn_copy_node(array[555061845], array[555058793]);
+-- Boksburg
+select rn_copy_node(array[555061526], array[555059057]);
+-- President
+update africa_osm_nodes set name = 'President', railway = 'station' where oid = 555062324;
+-- Boksburg East
+update africa_osm_nodes set name = 'Boksburg East', railway = 'station' where oid = 555063245;
+-- Ncwadi
+select rn_copy_node(array[555008289], array[555067141]);
+-- New Hanover
+update africa_osm_nodes set name = 'New Hanover', railway = 'station' where oid = 555103414;
+-- Lydenburg
+select rn_copy_node(array[555048736], array[555067956]);
+-- Scheepersnek
+select rn_copy_node(array[555029465], array[555072866]);
+-- Hugoslaagte
+select rn_copy_node(array[555029554], array[555073115]);
+-- Phomolong
+select rn_copy_node(array[555001482], array[555081842]);
+-- Crown
+select rn_copy_node(array[555001331], array[555081907]);
+-- Grosvenor
+update africa_osm_nodes set name = 'Grosvenor', railway = 'station' where oid = 555062628;
+-- Germiston West
+update africa_osm_nodes set name = 'Germiston West', railway = 'station' where oid = 555062723;
+-- Germiston South
+select rn_copy_node(array[555001376], array[555082462]);
+-- Jupiter
+select rn_copy_node(array[555001403], array[555082624]);
+-- Ravensklip
+update africa_osm_nodes set name = 'Ravensklip', railway = 'station' where oid = 555062322;
+-- Lowlands
+select rn_copy_node(array[555003357], array[555085787]);
+-- Harvard
+select rn_copy_node(array[555058387], array[555086590]);
+-- Villieria
+update africa_osm_nodes set name = 'Villieria', railway = 'station' where oid = 555059485;
+-- Loftus Versveldpark
+update africa_osm_nodes set name = 'Loftus Versveldpark', railway = 'station' where oid = 555059645;
+-- Mitchel Street
+select rn_copy_node(array[555001463], array[555089525]);
+-- Daspoort
+select rn_copy_node(array[555061859], array[555089753]);
+-- Cor Delfos
+select rn_copy_node(array[555048566], array[555090294]);
+-- eLubana
+select rn_copy_node(array[555013320], array[555093724]);
+-- Birchleigh
+select rn_copy_node(array[555061844], array[555094834]);
+-- Paarl
+update africa_osm_nodes set name = 'Paarl', railway = 'station' where oid = 555126437;
+-- Schuttestraat
+select rn_copy_node(array[555009082], array[555096123]);
+-- Orlando
+update africa_osm_nodes set name = 'Orlando', railway = 'station' where oid = 555062320;
+-- Beaconsfield
+update africa_osm_nodes set name = 'Beaconsfield', railway = 'station' where oid = 555041422;
+-- Tendeka
+select rn_copy_node(array[555028349], array[555101383]);
+-- Wesselsnek
+select rn_copy_node(array[555003353], array[555101932]);
+-- Pepworth
+select rn_copy_node(array[555003352], array[555101970]);
+-- Wasbank
+select rn_copy_node(array[555013329], array[555102426]);
+-- Dundee
+select rn_copy_node(array[555007729], array[555102653]);
+-- Malonjeni
+select rn_copy_node(array[555007730], array[555102707]);
+-- Bushlands
+select rn_copy_node(array[555008139], array[555102881]);
+-- Bayala
+select rn_copy_node(array[555008142], array[555102917]);
+-- iSangeyana
+select rn_copy_node(array[555008128], array[555103078]);
+-- eNgolothi
+select rn_copy_node(array[555008127], array[555103173]);
+-- iNtshamanzi
+select rn_copy_node(array[555011883], array[555103198]);
+-- Ulundi
+select rn_copy_node(array[555006744], array[555103259]);
+-- uLoliwe
+select rn_copy_node(array[555013323], array[555103360]);
+-- Ngogweni
+select rn_copy_node(array[555006743], array[555103455]);
+-- Bloubank
+select rn_copy_node(array[555013304], array[555103476]);
+-- Mahalumbe
+select rn_copy_node(array[555044846], array[555103555]);
+-- Paulpietersburg
+select rn_copy_node(array[555007940], array[555104167]);
+-- Kromkloof
+select rn_copy_node(array[555001718], array[555104513]);
+-- Kwaggastroom
+select rn_copy_node(array[555061803], array[555104551]);
+-- Waterval-Onder
+select rn_copy_node(array[555034436], array[555105977]);
+-- Boulders
+select rn_copy_node(array[555047216], array[555106437]);
+-- Balmoral
+select rn_copy_node(array[555002310], array[555107079]);
+-- Bosmanstraat
+select rn_copy_node(array[555000062], array[555108320]);
+-- Forfar
+select rn_copy_node(array[555001362], array[555109322]);
+-- Slabberts
+select rn_copy_node(array[555000580], array[555109579]);
+-- Firham
+select rn_copy_node(array[555058388], array[555109750]);
+-- Tutuka
+update africa_osm_nodes set name = 'Tutuka', railway = 'station' where oid = 555049256;
+-- Kaalfontein
+select rn_copy_node(array[555061843], array[555110540]);
+-- Medunsa
+update africa_osm_nodes set name = 'Medunsa', railway = 'station' where oid = 555054602;
+-- Koppie Alleen
+select rn_copy_node(array[555058369], array[555111339]);
+-- Hattingsspruit
+select rn_copy_node(array[555003359], array[555111743]);
+-- Matshaye
+select rn_copy_node(array[555028049], array[555112342]);
+-- Ireagh
+select rn_copy_node(array[555028048], array[555112344]);
+-- Delmas
+select rn_copy_node(array[555061606], array[555113330]);
+-- Natalspruit
+select rn_copy_node(array[555051081], array[555113826]);
+-- Rooikop
+select rn_copy_node(array[555001478], array[555114024]);
+-- Lenasia
+select rn_copy_node(array[555061795], array[555114447]);
+-- Centlivres
+update africa_osm_nodes set name = 'Centlivres', railway = 'station' where oid = 555052717;
+-- Sprucewell
+select rn_copy_node(array[555003448], array[555116233]);
+-- Kraal
+select rn_copy_node(array[555001420], array[555116270]);
+-- Viljoensdrif
+select rn_copy_node(array[555061538], array[555117544]);
+-- Limindlela
+select rn_copy_node(array[555061841], array[555119465]);
+-- Zonkizizwe
+select rn_copy_node(array[555001530], array[555119631]);
+-- Sportpark
+select rn_copy_node(array[555001517], array[555119760]);
+-- Olifantsfontein
+select rn_copy_node(array[555061852], array[555119865]);
+-- Georgedale
+select rn_copy_node(array[555014604], array[555121027]);
+-- Fouriesburg
+select rn_copy_node(array[555000456], array[555121668]);
+-- Mdantsane
+select rn_copy_node(array[555061731], array[555122016]);
+-- Florida
+select rn_copy_node(array[555061760], array[555122230]);
+-- Unified
+select rn_copy_node(array[555061761], array[555122231]);
+-- Hamberg
+select rn_copy_node(array[555061759], array[555122237]);
+-- Nancefield
+select rn_copy_node(array[555061791], array[555122251]);
+-- Beaufort West
+update africa_osm_nodes set name = 'Beaufort West', railway = 'station' where oid = 555090026;
+-- Kliptown
+select rn_copy_node(array[555061792], array[555122485]);
+-- Beechwick
+select rn_copy_node(array[555013288], array[555127143]);
+-- Bethal
+select rn_copy_node(array[555028674], array[555127706]);
+-- Hamelfontein
+select rn_copy_node(array[555023771], array[555127775]);
+-- Arbor
+select rn_copy_node(array[555058683], array[555128056]);
+-- Breyten (BTN)
+select rn_copy_node(array[555007988], array[555128486]);
+-- Magnesite
+select rn_copy_node(array[555007200], array[555128550]);
+-- Central
+select rn_copy_node(array[555001315], array[555129080]);
+-- Millsite
+select rn_copy_node(array[555061750], array[555129081]);
+-- Jordaan
+select rn_copy_node(array[555000488], array[555129645]);
+-- Kroonstad
+select rn_copy_node(array[555061535], array[555129655]);
+-- Rooiwal
+select rn_copy_node(array[555000589], array[555129714]);
+-- Koppies
+update africa_osm_nodes set name = 'Koppies', railway = 'station' where oid = 555062775;
+-- Heuningspruit
+select rn_copy_node(array[555000500], array[555129788]);
+-- Grasslands
+select rn_copy_node(array[555001665], array[555130100]);
+-- Allanridge
+select rn_copy_node(array[555000400], array[555130239]);
+-- Kalkvlakte
+select rn_copy_node(array[555000516], array[555130345]);
+-- Holfontein
+select rn_copy_node(array[555000494], array[555130371]);
+-- Geneva
+select rn_copy_node(array[555000482], array[555130411]);
+-- Wolwehoek
+select rn_copy_node(array[555007603], array[555131502]);
+-- Leeustroom
+select rn_copy_node(array[555000522], array[555131678]);
+-- Greenlands
+select rn_copy_node(array[555000484], array[555131679]);
+-- Dover
+select rn_copy_node(array[555000442], array[555131681]);
+-- Serfontein
+select rn_copy_node(array[555000573], array[555131706]);
+-- Virginia
+select rn_copy_node(array[555000640], array[555131711]);
+-- Hennenman
+select rn_copy_node(array[555000498], array[555131757]);
+-- Vetrivier
+select rn_copy_node(array[555000608], array[555131827]);
+-- Eensgevonden
+select rn_copy_node(array[555000467], array[555131831]);
+-- Theunissen
+select rn_copy_node(array[555000612], array[555131892]);
+-- Diamantoord
+select rn_copy_node(array[555001131], array[555134103]);
+-- Felixton
+select rn_copy_node(array[555013306], array[5550948082]);
+-- Glencoe
+select rn_copy_node(array[555003358], array[5551025691]);
+-- Hlobane
+select rn_copy_node(array[555008900], array[5551028182]);
+-- Piet Retief
+select rn_copy_node(array[555008100], array[5551087381]);
+-- Glenroy
+select rn_copy_node(array[555001375], array[5551156741]);
+-- Amerika
+select rn_copy_node(array[555000411], array[5551297012]);
+
+-- Winklespruit
+update africa_osm_nodes set name = 'Winklespruit', railway = 'station' where oid = 555065882;
+--Isipingo
+update africa_osm_nodes set name = 'Isipingo', railway = 'station' where oid = 555067672;
+-- Ilfracombe
+update africa_osm_nodes set name = 'Ilfracombe', railway = 'station' where oid = 555065887;
+-- Clevenland
+update africa_osm_nodes set name = 'Cleveland' where oid = 555032887;
+-- Havenside
+update africa_osm_nodes set name = 'Havenside', railway = 'station' where oid = 555062584;
+
 
 update africa_osm_nodes set railway = null where oid = 555041612;
+
+update africa_osm_nodes
+set gauge = '610'
+where st_intersects(geom, (select st_collect(geom) from africa_osm_edges where gauge = '610'))
+and country in ('South Africa') and railway in ('station', 'halt', 'stop');
 
 update africa_osm_nodes
 set gauge = '1067'
@@ -10040,19 +10386,27 @@ update africa_osm_nodes
 set railway = null
 where country = 'South Africa' and gauge is not null and railway = 'stop' and name in (select name from tmp);
 
--- oids that need to be copied to network line
+-- identify oids of station/stop/halt nodes that need to be copied to network edge and the oid of the edge
 with tmp as (
 select * from africa_osm_nodes where
-country = 'South Africa' and "railway" IN ('halt','stop','station') and gauge is null and "name" NOT IN (select name from africa_osm_nodes where country = 'South Africa' and gauge = '1067' and "railway" IN ('halt','stop','station')and name is not null order by name) order by name
+country = 'South Africa' and "railway" IN ('halt','stop','station') and gauge is null and "name" NOT IN (select name from africa_osm_nodes where country = 'South Africa' and gauge = '1067' and "railway" IN ('halt','stop','station') and name is not null order by name) order by name
 ), tmp2 as (
 select distinct on (name) name, oid, geom from tmp 
 ), tmp3 as (
 -- find nearest 
 SELECT tmp2.name, tmp2.oid as node_oid, lines.oid as line_oid, st_distance(st_transform(tmp2.geom, 3857), st_transform(lines.geom, 3857))
 FROM tmp2, africa_osm_edges lines
-where lines.country = 'South Africa' and lines.line is not null
-ORDER by tmp2.name)
-select distinct on (name) st_distance, node_oid, line_oid from tmp3 where st_distance <50 order by name, st_distance asc
+where lines.country = 'South Africa' and lines.line is not null and lines.gauge = '1067'
+ORDER by tmp2.name),
+-- by selecting distinct on name and ordering by st_distance we get the nearest edge oid
+tmp4 as (
+select distinct on (name) name, st_distance, node_oid, line_oid from tmp3 where st_distance <25 order by name, st_distance asc),
+-- some line oids are repeated and so the renumbering when split will fail for subsequent node copies. Therefore just get distinct. Then will repeat after.
+tmp5 as (
+select distinct on (line_oid) * from tmp4 order by line_oid
+)
+select * from tmp5
+
 
 --select t2.id,t2.record_date,t2.other_cols 
 --from (select ROW_NUMBER() over(partition by id order by record_date)as --rownum,id,record_date,other_cols from MyTable)t2 
