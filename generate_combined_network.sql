@@ -209,6 +209,45 @@ where status in ('unclear');
 UPDATE africa_rail_network set length = round(st_lengthspheroid(geom, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2);
 
 
+-- change country names to standard capitalised format
+select distinct country from africa_rail_network;
+
+update africa_rail_network
+set country = 'Kenya' where country = 'kenya';
+
+update africa_rail_network
+set country = 'Zambia' where country = 'zambia';
+
+update africa_rail_network
+set country = 'Uganda' where country = 'uganda';
+
+update africa_rail_network
+set country = 'Tanzania' where country = 'tanzania';
+
+select distinct country from africa_rail_nodes;
+
+update africa_rail_nodes
+set country = 'Kenya' where country = 'kenya';
+
+update africa_rail_nodes
+set country = 'Zambia' where country = 'zambia';
+
+update africa_rail_nodes
+set country = 'Uganda' where country = 'uganda';
+
+update africa_rail_nodes
+set country = 'Tanzania' where country = 'tanzania';
+
+
+-- stats
+select status, round(sum(length/1000)::numeric, 0) as length from africa_rail_network group by status order by length desc
+
+
+select country, round(sum(length/1000)::numeric, 0) as length from africa_rail_network group by country order by length desc
+
+select count(*) from africa_rail_nodes where facility is not null;
+select facility, count(*) from africa_rail_nodes group by facility order by count desc;
+select count(*) from africa_rail_nodes;
 -- test routing
 
 		SELECT X.*, a.line, a.status, a.gauge, a.country, b.type, b.name FROM pgr_dijkstra(
