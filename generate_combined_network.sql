@@ -32,13 +32,13 @@ add column comment varchar,
 add column name_arabic varchar,
 add column status text;
 
-select distinct type from africa_osm_edges where line is not null
+select distinct type from africa_osm_edges where line is not null;
 
 -- re-code oids for edges and nodes for hvt tables so will be unique when combined with afrn tables.
 UPDATE hvt_edges set oid = oid + 666600000000;
 UPDATE hvt_edges set source = source + 660000000;
 UPDATE hvt_edges set target = target + 660000000;
-UPDATE hvt_nodes set oid = oid + 660000000
+UPDATE hvt_nodes set oid = oid + 660000000;
 
 -- test routing
 		SELECT X.*, a.line, a.status, a.gauge, b.type, b.name FROM pgr_dijkstra(
@@ -204,6 +204,10 @@ where oid in (556000000,556000002,556000004);
 update africa_rail_network
 set status = 'unknown'
 where status in ('unclear');
+
+-- re-calculate edge lengths - measure spheroid length as no projection appropriate for entire continent
+UPDATE africa_rail_network set length = round(st_lengthspheroid(geom, 'SPHEROID["WGS 84",6378137,298.257223563]')::numeric,2);
+
 
 -- test routing
 
