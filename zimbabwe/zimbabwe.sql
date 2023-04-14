@@ -99,6 +99,16 @@ select rn_copy_node(array[558000019], array[555003219]);
 
 -- border node: 559000019
 
+-- update edge into Zambia
+
+update africa_osm_edges
+set line = 'Livingstone - Ndola',
+gauge = '1067',
+status = 'open',
+mode = 'mixed',
+country = 'Zambia'
+where oid = '5550032191';
+
 -- add nodes for routing into Bulawayo junction
 
 insert into africa_osm_nodes (
