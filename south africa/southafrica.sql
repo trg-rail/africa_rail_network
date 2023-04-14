@@ -7339,6 +7339,9 @@ where oid in (select edge from tmp);
 update africa_osm_nodes
 set name = 'Hatfield (GauTrain)' where oid =  555008774;
 
+-- simplify
+select rn_change_source(555102515, 555047519);
+
  with tmp as(
 SELECT X.* FROM pgr_dijkstra(
                 'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open''  ',
@@ -10347,6 +10350,44 @@ select rn_copy_node(array[555008100], array[5551087381]);
 select rn_copy_node(array[555001375], array[5551156741]);
 -- Amerika
 select rn_copy_node(array[555000411], array[5551297012]);
+-- Tongaat
+select rn_copy_node(array[555048424], array[555007206]);
+-- Moses Mabhida
+select rn_copy_node(array[555061647], array[555007923]);
+-- Fairview
+select rn_copy_node(array[555034432], array[555014047]);
+-- Estcourt
+select rn_copy_node(array[555034303], array[555085811]);
+-- Quail
+update africa_osm_nodes set name = 'Quail', railway = 'station' where oid = 555062787;
+-- Komvoorhoogte
+select rn_copy_node(array[555013328], array[555103478]);
+-- Residensia
+select rn_copy_node(array[555061801], array[555104550]);
+-- Hoedspruit
+select rn_copy_node(array[555001679], array[555108034]);
+-- Woodstock
+update africa_osm_nodes set name = 'Woodstock', railway = 'station' where oid = 555045343;
+-- Mountain View
+select rn_copy_node(array[555001901], array[555032318]);
+-- Phefeni
+select rn_copy_node(array[555001481], array[5550818421]);
+-- eMakwazini
+select rn_copy_node(array[555013321], array[555102995]);
+-- Pretoria Gautrain
+update africa_osm_nodes set name = 'Pretoria Gautrain', railway = 'station' where oid = 555047519;
+-- Devenish Street
+select rn_copy_node(array[555001327], array[]);
+
+select rn_copy_node(array[], array[]);
+
+select rn_copy_node(array[], array[]);
+
+select rn_copy_node(array[], array[]);
+
+select rn_copy_node(array[], array[]);
+
+select rn_copy_node(array[], array[]);
 
 -- Winklespruit
 update africa_osm_nodes set name = 'Winklespruit', railway = 'station' where oid = 555065882;
@@ -10400,17 +10441,12 @@ where lines.country = 'South Africa' and lines.line is not null and lines.gauge 
 ORDER by tmp2.name),
 -- by selecting distinct on name and ordering by st_distance we get the nearest edge oid
 tmp4 as (
-select distinct on (name) name, st_distance, node_oid, line_oid from tmp3 where st_distance <25 order by name, st_distance asc),
+select distinct on (name) name, st_distance, node_oid, line_oid from tmp3 where st_distance < 25 order by name, st_distance asc),
 -- some line oids are repeated and so the renumbering when split will fail for subsequent node copies. Therefore just get distinct. Then will repeat after.
 tmp5 as (
 select distinct on (line_oid) * from tmp4 order by line_oid
 )
 select * from tmp5
-
-
---select t2.id,t2.record_date,t2.other_cols 
---from (select ROW_NUMBER() over(partition by id order by record_date)as --rownum,id,record_date,other_cols from MyTable)t2 
---where t2.rownum = 1
 
 -- extract tables (backup)
 create table southafrica_osm_edges as select * from africa_osm_edges where country in ('South Africa');
@@ -10418,9 +10454,9 @@ create table southafrica_osm_nodes as select * from africa_osm_nodes where count
 
 -- test routing
 		SELECT X.*, a.line, a.status, a.gauge, b.railway, b.name FROM pgr_dijkstra(
-                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges ',
-               555070590,
-		555007204,
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where line is not null',
+               555031150,
+		555038407,
 		false
 		) AS X left join
 		africa_osm_edges as a on a.oid = X.edge left join
