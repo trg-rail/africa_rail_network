@@ -119,6 +119,7 @@ Progress:
 - [ ] South Africa
   - [x] Transnet core network
   - [x] Transnet branch network
+  - [x] Open, disused, abandoned and razed lines
   - [x] Metrorail networks (Durban area, Johannesburg/Pretoria area, Port Elizabeth/East London, Western Cape)
   - [x] Long distance passenger services run by PRASA as Shosholoza Meyl  (only two routes currently)
   - [x] Some private freight lines
@@ -126,4 +127,5 @@ Progress:
   - [x] 610mm gauge Avontuur Branch Line (Apple Express)
   - [x] Key freight destinations
   - [x] Ports
+  - [x] Electrification status (where known for records/sources)
   - [ ] Speed cost
