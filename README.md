@@ -8,6 +8,7 @@ Progress:
 - [ ] Morocco
   - [x] Open and disused lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and freight destinations
+  - [x] Electrification status where known
   - [ ] Tram/light rail
   - [ ] Speed cost
   - [ ] Under Construction lines
@@ -16,6 +17,7 @@ Progress:
   - [x] Open lines - passenger and freight - including line names and gauge
   - [x] Stations, ports and major freight destinations
   - [x] Station names additionally in Latin script where Arabic only
+  - [x] Electrification status where known
   - [ ] Tram/light rail
   - [ ] Speed cost
   - [ ] Under Construction lines
@@ -39,7 +41,7 @@ Progress:
   - [ ] Under Construction lines
 - [ ] West Africa (excluding Nigeria) - Mauritania, Senegal, Mali, Guinea, Sierra Leone, Liberia, Burkina Faso, Côte d'Ivoire, Ghana, Togo, Benin, Niger
   - [x] Mauritania (single line)
-  - [x] Senegal - new standard gauge and metre gauge (open/rehabilitation/disused)
+  - [x] Senegal - new standard gauge and metre gauge (open/rehabilitation/disused) - electrification status where known
   - [x] Mali - disused metre gauge (single line - Mali portion of Dakar-Niger railway)
   - [x] Guinea - standard gauge and metre gauge lines (open). Primarily mining lines.
   - [x] Sierra Leone - single 1067mm freight line between Pepel Port and iron ore mines in Tonkolili
@@ -79,11 +81,13 @@ Progress:
   - [x] Stations, ports and major freight destinations
   - [x] Some disused lines
   - [x] Some lines under construction
+  - [x] Electrification status where known
   - [ ] Speed cost
 - [ ] Democratic Republic of Congo
   - [x] Open lines - passenger and freight
   - [x] Stations, river ports and freight destinations (mainly mines)
   - [x] Disused/Unknown status lines
+  - [x] Electrification status where known
   - [ ] Speed cost
 - [ ] Angola
   - [x] Open lines - passenger and freight
