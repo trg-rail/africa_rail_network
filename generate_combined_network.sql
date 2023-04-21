@@ -64,12 +64,27 @@ from hvt_edges
 
 ALTER TABLE africa_rail_network ADD PRIMARY KEY (oid);
 
--- nodes table is just stations/stops/halts coincident with edges in respective networks
-create table africa_rail_nodes as
+-- stops table is just stations/stops/halts coincident with edges in respective networks
+create table africa_rail_stops as
 (
 select distinct a.oid, a.country, a.railway as type, a.name, a.name_arabic, a.facility, a.gauge, a.status, a.comment, a.geom from africa_osm_nodes a
 JOIN africa_osm_edges b ON st_intersects(a.geom, b.geom)
 where a.railway in ('station', 'halt', 'stop') and b.line is not null
+UNION
+select distinct a.oid, a.country, a.type, a.name, a.name_arabic, a.facility, a.gauge, a.status, a.comment, a.geom from hvt_nodes a
+where a.type in ('station', 'halt', 'stop') 
+order by country, name asc
+);
+
+ALTER TABLE africa_rail_stops ADD PRIMARY KEY (oid);
+
+-- nodes table
+
+create table africa_rail_nodes as
+(
+select distinct a.oid, a.country, a.railway as type, a.name, a.name_arabic, a.facility, a.gauge, a.status, a.comment, a.geom from africa_osm_nodes a
+JOIN africa_osm_edges b ON st_intersects(a.geom, b.geom)
+and b.line is not null
 UNION
 select distinct a.oid, a.country, a.type, a.name, a.name_arabic, a.facility, a.gauge, a.status, a.comment, a.geom from hvt_nodes a
 order by country, name asc
@@ -103,8 +118,95 @@ where oid = 666603330031;
 
 
 -- rationalise facility definitions
+select distinct facility from africa_rail_stops order by facility;
 select distinct facility from africa_rail_nodes order by facility;
 
+
+update africa_rail_stops
+set facility = 'industrial area'
+where facility in ('Business area','Business Area','Industrial area','Industrial Area','Industrial zone');
+
+update africa_rail_stops
+set facility = 'dry port'
+where facility in ('Dry Port', 'dry_port');
+
+update africa_rail_stops
+set facility = 'manufacturing'
+where facility in ('Cement plant', 'chemical_plant', 'Cement plant', 'Copper Smelter','manufacturer','manfacturing');
+
+update africa_rail_stops
+set facility = 'container terminal'
+where facility in ('Container Terminal','container_port');
+
+update africa_rail_stops
+set facility = 'food production'
+where facility in ('food','food manufacturing','food manufacture','Food manufacturing');
+
+update africa_rail_stops
+set facility = 'food storage'
+where facility in ('Food storage');
+
+update africa_rail_stops
+set facility = 'fuel storage'
+where facility in ('fuel depot','Fuel depot','fuel storage','fuel storage depot','fuel storage terminal','fuel terminal','Fuel terminal','Oil storage depot');
+
+update africa_rail_stops
+set facility = 'freight terminal'
+where facility in ('Freight Terminal','Rail Freight Terminal');
+
+update africa_rail_stops
+set facility = 'refinery'
+where facility in ('fuel refinery','oil refinery', 'Oil refinery');
+
+update africa_rail_stops
+set facility = 'power station'
+where facility in ('Power Station');
+
+update africa_rail_stops
+set facility = 'agriculture'
+where facility in ('Agriculture');
+
+update africa_rail_stops
+set facility = 'mining'
+where facility in ('mine', 'Mine');
+
+update africa_rail_stops
+set facility = 'port'
+where facility in ('Port');
+
+update africa_rail_stops
+set facility = 'quarry'
+where facility in ('Quarry');
+
+update africa_rail_stops
+set facility = 'port (river)'
+where facility in ('River Port');
+
+update africa_rail_stops
+set facility = 'military'
+where facility in ('Military');
+
+update africa_rail_stops
+set facility = 'terminal'
+where facility in ('cargo_terminal');
+
+update africa_rail_stops
+set facility = 'coal terminal'
+where facility in ('Coal Terminal (port)');
+
+update africa_rail_stops
+set facility = 'commodity auctions'
+where facility in ('Commodity auctions');
+
+update africa_rail_stops
+set facility = 'port (dry)'
+where facility in ('dry port');
+
+update africa_rail_stops
+set facility = 'marshalling yard'
+where facility in ('Marshalling Yard');
+
+-- nodes table
 update africa_rail_nodes
 set facility = 'industrial area'
 where facility in ('Business area','Business Area','Industrial area','Industrial Area','Industrial zone');
@@ -190,6 +292,7 @@ set facility = 'marshalling yard'
 where facility in ('Marshalling Yard');
 
 
+
 -- rationalise status
 select distinct status from africa_rail_network;
 
@@ -238,6 +341,18 @@ set country = 'Uganda' where country = 'uganda';
 update africa_rail_nodes
 set country = 'Tanzania' where country = 'tanzania';
 
+update africa_rail_stops
+set country = 'Kenya' where country = 'kenya';
+
+update africa_rail_stops
+set country = 'Zambia' where country = 'zambia';
+
+update africa_rail_stops
+set country = 'Uganda' where country = 'uganda';
+
+update africa_rail_stops
+set country = 'Tanzania' where country = 'tanzania';
+
 
 -- stats
 select status, round(sum(length/1000)::numeric, 0) as length from africa_rail_network group by status order by length desc
@@ -248,6 +363,7 @@ select country, round(sum(length/1000)::numeric, 0) as length from africa_rail_n
 select count(*) from africa_rail_nodes where facility is not null;
 select facility, count(*) from africa_rail_nodes group by facility order by count desc;
 select count(*) from africa_rail_nodes;
+
 -- test routing
 
 		SELECT X.*, a.line, a.status, a.gauge, a.country, b.type, b.name FROM pgr_dijkstra(
