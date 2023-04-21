@@ -353,6 +353,114 @@ set country = 'Uganda' where country = 'uganda';
 update africa_rail_stops
 set country = 'Tanzania' where country = 'tanzania';
 
+-- electrified
+alter table africa_rail_network
+add column electrified VARCHAR(3);
+
+update africa_rail_network
+set electrified = 'y' 
+where lower(comment) like '%electrified%' and lower(comment) not like '%not electrified%';
+
+update africa_rail_network
+set electrified = 'n' 
+where lower(comment) like '%not electrified%';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Sishen - Saldanha Line';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Pyramid South - Sentrarand Marshalling Yard';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Sentrarand Marshalling Yard - Welgedag depot';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Welgedag Depot - Pullenshope';
+
+update africa_rail_network
+set electrified = 'n'
+where line = 'Lephalale - Thabazimbi (Waterberg Line)';
+
+update africa_rail_network
+set electrified = 'n'
+where line = 'Machadodorp - Ermelo';
+
+update africa_rail_network
+set electrified = 'n'
+where line = 'Utrecht branch';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Emalahleni - Ogies';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Majuba Power Station (Eskom private line)';
+
+update africa_rail_network
+set electrified = 'y'
+where comment = 'GauTrain';
+
+update africa_rail_network
+set electrified = 'y'
+where lower(comment) like '%gauteng metrorail%';
+
+update africa_rail_network
+set electrified = 'y'
+where lower(comment) like '%durban metrorail%';
+
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555065492,
+		556034428,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_rail_network
+set electrified = 'y'
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555065492,
+		556034428,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_rail_network
+set electrified = 'y'
+where oid in (select edge from tmp);
+
+ with tmp as(
+SELECT X.* FROM pgr_dijkstra(
+                'SELECT oid as id, source, target, length AS cost FROM africa_osm_edges where country = ''South Africa'' and status = ''open'' ',
+            555131135,
+		555003361,
+		false
+		) AS X
+		ORDER BY seq)
+update africa_rail_network
+set electrified = 'y'
+where oid in (select edge from tmp);
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Pullenshope - Wonderfontein';
+
+update africa_rail_network
+set electrified = 'y'
+where line = 'Vryheid - Glencoe';
+
+update africa_rail_network
+set electrified = 'tbc' 
+where electrified is null
 
 -- stats
 select status, round(sum(length/1000)::numeric, 0) as length from africa_rail_network group by status order by length desc
