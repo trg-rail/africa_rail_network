@@ -14,7 +14,7 @@ As with the previous work in East Africa, a single line is used to represent the
 
 In total the created network is 82,301 km in length with 5327 stations/stops.
 
-Here is an example routing query (showing named stops passed through only) from the International  Container Terminal at Dar es Salaam, Tanzania to Port of Richards Bay Coal Terminal, South Africa; passing through Zambia and Zimbabwe.
+Here is an example routing query (showing named stops passed through only) from the International  Container Terminal at Dar es Salaam, Tanzania to Port of Richards Bay Coal Terminal, South Africa; passing through Zambia, Zimbabwe and Eswatini.
 
 | Seq  | Aggregate cost (km) | Line                                                    | Line status | Gauge | Country      | Stop type | Stop name                            |
 | ---- | ------------------- | ------------------------------------------------------- | ----------- | ----- | ------------ | --------- | ------------------------------------ |
